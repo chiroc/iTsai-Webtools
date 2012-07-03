@@ -1,9 +1,18 @@
 /**
- * iTsai(Cai zhipeng) WebTools(Web开发工具集)
+ * iTsai WebTools(Web开发工具集)
  * 
+ * @author Chihpeng Tsai(470597142@qq.com)
+ * @description Javascript 常用API,包括信息提示、插件检测等.
  */
-// var iTsai = {};
+
+(function() {
+	if (!window.iTsai)
+		iTsai = {};
+})();
 iTsai.util = {
+	toString : function() {
+		return 'iTsai.util - Javascript 常用API,包括信息提示、插件检测等';
+	},
 	/**
 	 * 生成唯一CID编号:时间+4位随机数
 	 */
@@ -137,7 +146,8 @@ iTsai.util = {
 		return (!obj ? '' : obj);
 	},
 	/**
-	 * 检测插件是否存在
+	 * 检测插件是否存在,如:'Quicktime'/'Quicktime.Quicktime'<br>
+	 * IE浏览器控件的名称通道和其它浏览器插件名称不一致
 	 * 
 	 * @param name
 	 *            插件名称
@@ -146,8 +156,6 @@ iTsai.util = {
 	 * @returns {Boolean}
 	 */
 	checkPlugin : function(name, nameIE) {
-		// var name = 'NetPosa Mobile Player';
-		// var nameIE = "PlayerDetection.PlayerDetec.1";
 		return this.hasPluginIE(nameIE) || this.hasPlugin(name);
 	},
 	/**
@@ -188,21 +196,20 @@ iTsai.util = {
 	 * 颜色取反
 	 */
 	colorInverse : function(color) {
-		// var color = '#33cc10';
 		color = !color ? '' : color;
 		color = parseInt(color.replace('#', '0x'));
-		// var bc = color.toString(2);
 		var r = color >> 16;
 		var g = color >> 8 & 0x0000ff;
 		var b = color & 0x0000ff;
-
 		var _r = 255 - r;
 		var _g = 255 - g;
 		var _b = 255 - b;
-
 		var clr = '#' + (_r << 16 | _g << 8 | _b).toString(16);
 		return clr == '#0' ? '#000000' : clr;
 	},
+	/**
+	 * 获取语言代码,如:'zh-cn'
+	 */
 	getLang : function() {
 		var nav = window.navigator;
 		return (nav.language || nav.userLanguage).toLowerCase();
