@@ -1,9 +1,19 @@
 /**
- * iTsai(Cai zhipeng) WebTools(Web开发工具集)
+ * iTsai WebTools(Web开发工具集)
  * 
+ * @author Chihpeng Tsai(470597142@qq.com)
+ * @description 遮盖层工具，包括页面遮盖和元素遮盖等.
  */
 
+(function() {
+	if (!window.iTsai)
+		iTsai = {};
+})();
+
 iTsai.layer = {
+	toString : function() {
+		return 'iTsai.layer - 遮盖层工具，包括页面遮盖和元素遮盖等';
+	},
 	color : '#999',
 	opacity : 0.5,
 	/**
@@ -54,9 +64,9 @@ iTsai.layer = {
 	 */
 	addInfo : function(info, isAppend) {
 		if (isAppend) {
-			$('#itsai-layer').append(info);
+			$('#itsai-layer span').append(info);
 		} else {
-			$('#itsai-layer').html(info);
+			$('#itsai-layer span').html(info);
 		}
 	},
 	/**

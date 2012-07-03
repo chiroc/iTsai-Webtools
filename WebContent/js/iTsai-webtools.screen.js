@@ -1,9 +1,19 @@
 /**
- * iTsai(Cai zhipeng) WebTools(Web开发工具集)
+ * iTsai WebTools(Web开发工具集)
  * 
+ * @author Chihpeng Tsai(470597142@qq.com)
+ * @description 屏幕处理工具，包括移动屏幕元素、窗口处理等.
  */
 
+(function() {
+	if (!window.iTsai)
+		iTsai = {};
+})();
+
 iTsai.screen = {
+	toString : function() {
+		return 'iTsai.screen - 屏幕处理工具，包括移动屏幕元素、窗口处理等';
+	},
 	/**
 	 * 将元素移动到屏幕中间
 	 * 
@@ -42,12 +52,5 @@ iTsai.screen = {
 		s += " 你的屏幕设置 " + window.screen.deviceXDPI + " 像素/英寸" + "\n";
 		s += " window的页面可视部分实际高度(ff) " + window.innerHeight + "\n";
 		return s;
-	}
+	},
 };
-
-function closeWin() {
-	// window.opener = null;window.close();
-	window.opener = null;
-	window.open('', '_self');
-	window.close();
-}

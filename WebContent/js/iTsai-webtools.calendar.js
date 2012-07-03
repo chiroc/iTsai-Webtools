@@ -1,9 +1,19 @@
 /**
- * iTsai(Cai zhipeng) WebTools(Web开发工具集)
+ * iTsai WebTools(Web开发工具集)
  * 
+ * @author Chihpeng Tsai(470597142@qq.com)
+ * @description 日期时间处理工具.
  */
 
+(function() {
+	if (!window.iTsai)
+		iTsai = {};
+})();
+
 iTsai.calendar = {
+	toString : function() {
+		return 'iTsai.calendar - 日期时间处理工具';
+	},
 	/**
 	 * 将秒转换为时间hh:mm:ss格式
 	 * 
@@ -110,7 +120,7 @@ iTsai.calendar = {
 		var dates = picker.datepicker(
 				{
 					changeMonth : true,
-					// numberOfMonths: 1,
+					numberOfMonths : 1,
 					dateFormat : 'yy-mm-dd',
 					onSelect : function(selectedDate) {
 						var option = this.id == datefrom ? "minDate"

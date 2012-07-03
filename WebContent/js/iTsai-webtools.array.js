@@ -1,11 +1,14 @@
 /**
- * iTsai(Cai zhipeng) WebTools(Web开发工具集)
+ * iTsai WebTools(Web开发工具集)
  * 
+ * @author Chihpeng Tsai(470597142@qq.com)
+ * @description 数组处理工具.
  */
 
-/**
- * 数组处理工具
- */
+(function() {
+	if (!window.iTsai)
+		iTsai = {};
+})();
 
 /**
  * 判断数据中是否存在cell值，并返回第一个存在的位置

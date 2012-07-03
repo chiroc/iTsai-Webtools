@@ -1,11 +1,15 @@
 /**
- * iTsai(Cai zhipeng) WebTools(Web开发工具集)
+ * iTsai WebTools(Web开发工具集)
  * 
+ * @author Chihpeng Tsai(470597142@qq.com)
+ * @description 字符串处理工具常用API,包括空白处理、字符统计、字符缓存工具等.
  */
 
-/**
- * 字符串处理工具,根据需要持续增加中
- */
+(function() {
+	if (!window.iTsai)
+		iTsai = {};
+})();
+
 /**
  * 去掉字符串前面和最后的空格
  */

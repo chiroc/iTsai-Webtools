@@ -1,9 +1,19 @@
 /**
- * iTsai(Cai zhipeng) WebTools(Web开发工具集)
+ * iTsai WebTools(Web开发工具集)
  * 
+ * @author Chihpeng Tsai(470597142@qq.com)
+ * @description 表单处理工具.
  */
 
+(function() {
+	if (!window.iTsai)
+		iTsai = {};
+})();
+
 iTsai.form = {
+	toString : function() {
+		return 'iTsai.form - 表单处理工具';
+	},
 	/**
 	 * 获取单选框值,如果有表单就在表单内查询,否则在全文查询
 	 * 

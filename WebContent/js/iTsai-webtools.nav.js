@@ -1,20 +1,27 @@
 /**
- * iTsai(Cai zhipeng) WebTools(Web开发工具集)
+ * iTsai WebTools(Web开发工具集)
  * 
+ * @author Chihpeng Tsai(470597142@qq.com)
+ * @description 页面导航工具等.
  */
 
+(function() {
+	if (!window.iTsai)
+		iTsai = {};
+})();
+
 iTsai.nav = {
+	toString : function() {
+		return 'iTsai.layer - 页面导航工具等';
+	},
 	/**
 	 * 获取URL地址栏参数
 	 * 
-	 * @param name
+	 * @param{String} name URL地址
 	 * @returns
 	 */
 	getParameter : function(name) {
-		// 获取URL地址参数部分
 		var paramStr = window.location.search;
-		// ?devno=888888&clsid=53EACB5F-D068-422F-8836-FAC0C0C75CCA
-		// alert("paramStr:\n"+paramStr);
 		if (paramStr.length == 0) {
 			return null;
 		}
@@ -60,13 +67,17 @@ iTsai.nav = {
 		history.go(0);
 		return this;
 	},
+	/**
+	 * 设置主页
+	 * 
+	 * @param url
+	 * @returns {___anonymous186_2244}
+	 */
 	setHomepage : function(url) {
 		if (document.all) {
-			// IE
 			document.body.style.behavior = 'url(#default#homepage)';
 			document.body.setHomePage(url);
 		} else if (window.sidebar) {
-			// 火狐
 			if (window.netscape) {
 				try {
 					window.netscape.security.PrivilegeManager
@@ -83,6 +94,11 @@ iTsai.nav = {
 		}
 		return this;
 	},
+	/**
+	 * 获取域名或主机IP
+	 * 
+	 * @returns
+	 */
 	getHost : function() {
 		return location.host.split(':')[0];
 	},
