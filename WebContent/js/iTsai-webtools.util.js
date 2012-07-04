@@ -213,5 +213,72 @@ iTsai.util = {
 	getLang : function() {
 		var nav = window.navigator;
 		return (nav.language || nav.userLanguage).toLowerCase();
+	},
+	/**
+	 * 取消事件冒泡
+	 * 
+	 * @param e
+	 */
+	stopBubble : function(e) {
+		if (e && e.stopPropagation)
+			e.stopPropagation();
+		else
+			window.event.cancelBubble = true;
+	},
+	/**
+	 * 阻止浏览器默认行为
+	 * 
+	 * @param e
+	 * @returns {Boolean}
+	 */
+	stopDefault : function(e) {
+		if (e && e.preventDefault)
+			e.preventDefault();
+		else
+			window.event.returnValue = false;
+		return false;
+	},
+	/**
+	 * 获取浏览器名称和版本号
+	 * 
+	 * @returns {} {name:'',version:''}
+	 */
+	getBrowserAgent : function() {
+		var browser = {};
+		var userAgent = navigator.userAgent.toLowerCase();
+		var s;
+		(s = userAgent.match(/msie ([\d.]+)/)) ? browser.ie = s[1]
+				: (s = userAgent.match(/firefox\/([\d.]+)/)) ? browser.firefox = s[1]
+						: (s = userAgent.match(/chrome\/([\d.]+)/)) ? browser.chrome = s[1]
+								: (s = userAgent.match(/opera.([\d.]+)/)) ? browser.opera = s[1]
+										: (s = userAgent
+												.match(/version\/([\d.]+).*safari/)) ? browser.safari = s[1]
+												: 0;
+
+		var name = '';
+		var version = '';
+		if (browser.ie) {
+			name = 'msie';
+			version = browser.ie;
+		} else if (browser.firefox) {
+			name = 'firefox';
+			version = browser.firefox;
+		} else if (browser.chrome) {
+			name = 'chrome';
+			version = browser.chrome;
+		} else if (browser.opera) {
+			name = 'opera';
+			version = browser.opera;
+		} else if (browser.safari) {
+			name = 'safari';
+			version = browser.safari;
+		} else {
+			name = 'unknown';
+		}
+		return {
+			name : name,
+			version : version ? version.split('\.')[0] : version,
+			versions : version
+		};
 	}
 };

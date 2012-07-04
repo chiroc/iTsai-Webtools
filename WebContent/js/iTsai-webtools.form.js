@@ -72,5 +72,32 @@ iTsai.form = {
 					fn();
 			}
 		});
+	},
+	/**
+	 * 序列化表单值,结果以key/value形式返回key为表单对象名称(name||id),value为其值
+	 * 
+	 * @param{$()} frm 表单对象
+	 * @returns {}
+	 */
+	serialize : function(frm) {
+		var obj = {};
+		var obj = {
+			    k1 : 'v1',
+			    k2 : 'v2'
+			};
+			for(var o in obj){
+			    console.log(o,' - ',obj[o]);
+			}
+
+		return obj;
+	},
+	/**
+	 * 将序列化表单值---以key/value形式返回key为表单对象名称(name||id),value为其值
+	 * 
+	 * @param{$()} frm 表单对象
+	 * @returns {}
+	 */
+	deserialize : function(frm){
+		
 	}
 };
