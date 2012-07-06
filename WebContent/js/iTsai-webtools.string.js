@@ -108,6 +108,13 @@ String.prototype.mergeline = function() {
 	return this.replace(/(\n+)/g, "\n");
 };
 /**
+ * 将NULl转换为空字符
+ * @returns
+ */
+String.prototype.null2Empty = function() {
+	return this === null ? "" : this;
+};
+/**
  * 将\n替换为\r\n<br>
  * 在windows系统下，回车换行符号是"\r\n".但是在Linux等系统下是"\n"符号
  * 
