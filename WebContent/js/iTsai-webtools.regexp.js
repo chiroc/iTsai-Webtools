@@ -9,6 +9,7 @@
 	if (!window.iTsai)
 		iTsai = {};
 })();
+
 iTsai.regexp = {
 	toString : function() {
 		return 'iTsai.layer - 常用正则表达式';

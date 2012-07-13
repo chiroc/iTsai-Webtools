@@ -98,16 +98,28 @@ iTsai.calendar = {
 		return [ date, ' ', h, dd, m, dd, s ].join('');
 	},
 	/**
+	 * 根据日期时间格式获取获取当前日期时间
+	 * @prarm{String} "yyyy-MM-dd hh:mm:ss";
+	 */
+	dateTimeWrapper : function(fmt){
+		if (arguments[0])
+			fmt = arguments[0];
+		return this.dateTime2str(new Date(), fmt);
+	},
+	/**
 	 * 获取当前日期时间
 	 * 
 	 * @param{String} arguments 可设置一个日期时间格式,如:'yyyy/MM/dd hh:mm:ss'
 	 * @returns
 	 */
 	getDatetime : function() {
-		var fmt = "yyyy-MM-dd hh:mm:ss";
-		if (arguments[0])
-			fmt = arguments[0];
-		return this.dateTime2str(new Date(), fmt);
+		return this.dateTimeWrapper('yyyy-MM-dd hh:mm:ss');
+	},
+	getDate : function(){
+		return this.dateTimeWrapper('yyyy-MM-dd');
+	},
+	getTime : function(){
+		return this.dateTimeWrapper('hh:mm:ss');
 	},
 	/**
 	 * 初始化日期段选择器
