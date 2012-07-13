@@ -17,11 +17,12 @@ iTsai.nav = {
 	/**
 	 * 获取URL地址栏参数
 	 * 
-	 * @param{String} name URL地址
-	 * @returns
+	 * @param{String} name 参数名
+	 * @prarm{String} url URL地址默认为当前URL
+ 	 * @returns
 	 */
-	getParameter : function(name) {
-		var paramStr = window.location.search;
+	getParameter : function(name,url) {
+		var paramStr = url || window.location.search;
 		if (paramStr.length == 0) {
 			return null;
 		}
