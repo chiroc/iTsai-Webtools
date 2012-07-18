@@ -99,9 +99,10 @@ iTsai.calendar = {
 	},
 	/**
 	 * 根据日期时间格式获取获取当前日期时间
+	 * 
 	 * @prarm{String} "yyyy-MM-dd hh:mm:ss";
 	 */
-	dateTimeWrapper : function(fmt){
+	dateTimeWrapper : function(fmt) {
 		if (arguments[0])
 			fmt = arguments[0];
 		return this.dateTime2str(new Date(), fmt);
@@ -115,10 +116,19 @@ iTsai.calendar = {
 	getDatetime : function() {
 		return this.dateTimeWrapper('yyyy-MM-dd hh:mm:ss');
 	},
-	getDate : function(){
+	/**
+	 * 获取当前日期时间+毫秒
+	 * @returns {String}
+	 */
+	getDatetimes : function() {
+		var dt = new Date();
+		return this.dateTime2str(dt, 'yyyy-MM-dd hh:mm:ss') + '.'
+				+ dt.getMilliseconds();
+	},
+	getDate : function() {
 		return this.dateTimeWrapper('yyyy-MM-dd');
 	},
-	getTime : function(){
+	getTime : function() {
 		return this.dateTimeWrapper('hh:mm:ss');
 	},
 	/**
