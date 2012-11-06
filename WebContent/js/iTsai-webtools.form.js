@@ -84,13 +84,14 @@ iTsai.form = {
 		if (!frm) {
 			return obj;
 		};
+		var types = ['button','checkbox','color','date ','datetime ','datetime-local ','email ','file','hidden','image','month ','number ','password','radio','range ','reset','search','submit','tel','text','time ','url','week'];
 		var obj = {
-			    k1 : 'v1',
-			    k2 : 'v2'
-			};
-			for(var o in obj){
-			    console.log(o,' - ',obj[o]);
-			}
+		    k1 : 'v1',
+		    k2 : 'v2'
+		};
+		for(var o in obj){
+		    console.log(o,' - ',obj[o]);
+		}
 
 		return obj;
 	},
