@@ -24,12 +24,14 @@ iTsai.screen = {
 			return false;
 		var body = $('body');
 		var doc = $(document);
-		obj.css({
-			position : 'absolute',
-			left : (doc.width() - obj.width()) / 2,
-			top : doc.scrollTop()
-					+ (window.innerHeight || doc.height() - obj.height()) / 2
-		});
+		obj
+				.css({
+					position : 'absolute',
+					left : (doc.width() - obj.width()) / 2,
+					top : doc.scrollTop()
+							+ (($.browser.msie ? doc.height()
+									: window.innerHeight) - obj.height()) / 2
+				});
 	},
 	toString : function() {
 		var s = "";
@@ -52,5 +54,5 @@ iTsai.screen = {
 		s += " 你的屏幕设置 " + window.screen.deviceXDPI + " 像素/英寸" + "\n";
 		s += " window的页面可视部分实际高度(ff) " + window.innerHeight + "\n";
 		return s;
-	},
+	}
 };

@@ -44,6 +44,10 @@ iTsai.util = {
 		}
 		return true;
 	},
+	decimal : function(num, v) {
+		var vv = Math.pow(10, v);
+		return Math.round(num * vv) / vv;
+	},
 	/**
 	 * 普通信息提示
 	 * 
@@ -220,10 +224,12 @@ iTsai.util = {
 	 * @param e
 	 */
 	stopBubble : function(e) {
-		if (e && e.stopPropagation)
+		if (e && e.stopPropagation) {
 			e.stopPropagation();
-		else
+		} else {
+			// ie
 			window.event.cancelBubble = true;
+		}
 	},
 	/**
 	 * 阻止浏览器默认行为
@@ -232,10 +238,12 @@ iTsai.util = {
 	 * @returns {Boolean}
 	 */
 	stopDefault : function(e) {
-		if (e && e.preventDefault)
+		if (e && e.preventDefault) {
 			e.preventDefault();
-		else
+		} else {
+			// ie
 			window.event.returnValue = false;
+		}
 		return false;
 	},
 	/**

@@ -81,6 +81,9 @@ iTsai.form = {
 	 */
 	serialize : function(frm) {
 		var obj = {};
+		if (!frm) {
+			return obj;
+		};
 		var obj = {
 			    k1 : 'v1',
 			    k2 : 'v2'

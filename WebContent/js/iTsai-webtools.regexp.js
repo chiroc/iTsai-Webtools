@@ -33,5 +33,5 @@ iTsai.regexp = {
 	 */
 	ascii : /[^\x00-xff]/,
 	blank : /\s/,
-	notBlank : /\S/,
+	notBlank : /\S/
 };
