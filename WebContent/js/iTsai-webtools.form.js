@@ -74,34 +74,319 @@ iTsai.form = {
 		});
 	},
 	/**
-	 * 序列化表单值,结果以key/value形式返回key为表单对象名称(name||id),value为其值
+	 * 将输入控件集合序列化成对象<br>
+	 * 名称或编号作为键，value属性作为值
 	 * 
-	 * @param{$()} frm 表单对象
-	 * @returns {}
+	 * @inputs {Array} input/select/textarea的对象集合
+	 * @return {object} json 对象 {key:value,...}
 	 */
-	serialize : function(frm) {
-		var obj = {};
-		if (!frm) {
-			return obj;
-		};
-		var types = ['button','checkbox','color','date ','datetime ','datetime-local ','email ','file','hidden','image','month ','number ','password','radio','range ','reset','search','submit','tel','text','time ','url','week'];
-		var obj = {
-		    k1 : 'v1',
-		    k2 : 'v2'
-		};
-		for(var o in obj){
-		    console.log(o,' - ',obj[o]);
+	_serializeInputs : function(inputs) {
+		var json = {};
+		if (!inputs) {
+			return json;
+		}
+		for ( var i = inputs.length - 1; i >= 0; i--) {
+			var input = $(inputs[i]);
+			var type = input.attr('type');
+			if (type) {
+				type = type.toLowerCase();
+			}
+			var tagName = input.get(0).tagName;
+			var id = input.attr('id');
+			var name = input.attr('name');
+			var value = null;
+
+			// 判断输入框是否已经序列化过
+			if (input.hasClass('_isSerialized')) {
+				continue;
+			}
+
+			// input输入标签
+			if (tagName == 'INPUT' && type) {
+				switch (type) {
+				case 'checkbox': {
+					value = input.is(':checked');
+				}
+					break;
+
+				case 'radio': {
+					if (input.is(':checked')) {
+						value = input.attr('value');
+					} else {
+						continue;
+					}
+				}
+					break;
+
+				default: {
+					value = input.val();
+				}
+				}
+			} else {
+				// 非input输入标签，如：select,textarea
+				value = input.val();
+			}
+
+			json[name || id] = value;
+			// 清除序列化标记
+			input.removeClass('_isSerialized');
+		}
+		return json;
+	},
+	_deserializeInputs : function(inputs, value) {
+		if (!inputs && value == null) {
+			return this;
 		}
 
-		return obj;
+		for ( var i = inputs.length - 1; i >= 0; i--) {
+			var input = $(inputs[i]);
+			// 判断输入框是否已经序列化过
+			if (input.hasClass('_isSerialized')) {
+				continue;
+			}
+			var type = input.attr('type');
+			if (type) {
+				type = type.toLowerCase();
+			}
+			if (type) {
+				switch (type) {
+				case 'checkbox': {
+					input.attr('checked', value);
+				}
+					break;
+
+				case 'radio': {
+					input.each(function(i) {
+						var thiz = $(this);
+						if (thiz.attr('value') == value) {
+							thiz.attr('checked', true);
+						}
+					});
+				}
+					break;
+
+				default: {
+					input.val(value);
+				}
+				}
+			} else {
+				input.val(value);
+			}
+
+			input.addClass('_isSerialized');
+		}
+
+		return this;
 	},
 	/**
-	 * 将序列化表单值---以key/value形式返回key为表单对象名称(name||id),value为其值
+	 * 在分组中查找 jsonkey (如：jsonkey="user")开头的数据域<br>
 	 * 
-	 * @param{$()} frm 表单对象
-	 * @returns {}
+	 * @groups {Array} 输入框分组容器集合
+	 * @return {Object} json 对象 {key:value,...}
 	 */
-	deserialize : function(frm){
-		
+	_serializeGroups : function(groups) {
+		var json = {};
+		if (!groups) {
+			return json;
+		}
+
+		for ( var i = groups.length - 1; i >= 0; i--) {
+			var group = $(groups[i]);
+			var key = group.attr('jsonkey');
+			var inputs = group
+					.find('input[type!=button][type!=reset][type!=submit],select,textarea');
+			json[key] = this._serializeInputs(inputs);
+			// 添加序列化标记
+			inputs.addClass('_isSerialized');
+		}
+		return json;
+	},
+	/**
+	 * 序列化表单值,结果以key/value形式返回key为表单对象名称(name||id),value为其值.<br>
+	 * HTML格式：<br>
+	 * 1).表单容器：通常是一个form表单（如果不存在就以body为父容器），里面包含输入标签和子容器;<br>
+	 * 2).子容器（也可以没有）：必须包括属性jsonkey="XXX" div标签，里面包含输入标签和子容器。<br>
+	 * 序列化后将生成以XXX为主键的json对象.如果子容器存在嵌套则以jsonkey为主键生成不同分组的json对象.<br>
+	 * 3).输入标签：输入标签为input类型标签（包括：'checkbox','color','date','datetime','datetime-local',<br>
+	 * 'email','file','hidden','month','number','password','radio','range
+	 * ','reset','search','submit',<br>
+	 * 'tel','text','time ','url','week'）.
+	 * 而'button','reset','submit','image'会被过虑掉.
+	 * 
+	 * @param{$()} frm jQuery表单对象
+	 * @returns {Object} json对象 最多包含两层结构
+	 */
+	serialize : function(frm) {
+		var json = {};
+		frm = frm || $('body');
+		if (!frm) {
+			return json;
+		}
+
+		var groups = frm.find('div[jsonkey!=""]');
+		var jsonGroup = this._serializeGroups(groups);
+
+		var inputs = frm
+				.find('input[type!=button][type!=reset][type!=submit][type!=image],select,textarea');
+		var json = this._serializeInputs(inputs);
+
+		for ( var key in jsonGroup) {
+			json[key] = jsonGroup[key];
+		}
+		return json;
+	},
+	/**
+	 * 填充表单内容---将json数据形式数据填充到表单内
+	 * 
+	 * @param{$()} frm jQuery表单对象（或其它容器标签对象，如：div）
+	 * @param{Object} json 序列化好的json数据对象，最多只包含两层嵌套
+	 * @returns {Object} iTsai.form 对象
+	 */
+	deserializeJSON : function(frm, json) {
+		frm = frm || $('body');
+		if (!frm || !json) {
+			return this;
+		}
+
+		var _deserializeInputs = this._deserializeInputs;
+		for ( var key in json) {
+			var value = json[key];
+			if (typeof value == 'object') {
+				for ( var k in value) {
+					var val = value[k];
+					_deserializeInputs(frm.find('div[jsonkey="' + k + '"]'), k,
+							val);
+				}
+			} else {
+				_deserializeInputs(frm, key, value);
+			}
+		}
+		return this;
+	},
+	/**
+	 * 获取合法的输入标签
+	 * 
+	 * @param {$()}
+	 *            container 标签容器
+	 * @returns {[]} inputs jQuery对象数组
+	 */
+	_filterInputs : function(container) {
+		var inputs = $(container
+				.find('input[type!=button][type!=reset][type!=submit][type!=image][type!=file],select,textarea'));
+		return inputs;
+	},
+	/**
+	 * 查找符合条件的输入标签
+	 * @param{Array} inputs jQueery输入标签数组
+	 * @param{String} key 查询关键字
+	 * @returns{Array} input 标签数组 
+	 */
+	_findInputs : function(inputs, key) {
+		var input = $(inputs.filter('input[name=' + key + '],input[id=' + key
+				+ '],textarea[name=' + key + '],textarea[id=' + key
+				+ '],select[name=' + key + '],select[id=' + key + ']'));
+		return input;
+	},
+	/**
+	 * 填充表单内容---将json数据形式数据填充到表单内
+	 * 
+	 * @param{$()} frm jQuery表单对象（或其它容器标签对象，如：div）
+	 * @param{Object} json 序列化好的json数据对象，最多只包含两层嵌套
+	 * @returns {Object} iTsai.form 对象
+	 */
+	deserialize : function(frm, json) {
+		frm = frm || $('body');
+		if (!frm || !json) {
+			return this;
+		}
+
+		// 缓存json第一层数据对象
+		var objects = {};
+		// 缓存json嵌套层数据（第二层），将首先被赋值，以避免覆盖
+		var groups = {};
+
+		// 数据分组
+		for ( var key in json) {
+			var value = json[key];
+			if (typeof value == 'object') {
+				groups[key] = value;
+			} else {
+				objects[key] = value;
+			}
+		}
+
+		var _deserializeInputs = this._deserializeInputs;
+		var _filterInputs = this._filterInputs;
+		var _findInputs = this._findInputs;
+
+		// 填充嵌套层数据
+		for ( var key in groups) {
+			var json = groups[key];
+			var div = frm.find('div[jsonkey="' + key + '"]');
+			if (!div.length) {
+				continue;
+			}
+			var inputs = _filterInputs(div);
+			// var inputs = $(div
+			// .find('input[type!=button][type!=reset][type!=submit][type!=image][type!=file],select,textarea'));
+			if (!inputs.length) {
+				continue;
+			}
+			for ( var k in json) {
+				var val = json[k];
+				var input = _findInputs(inputs,k);
+//				$(inputs.filter('input[name=' + k + '],input[id='
+//						+ k + '],textarea[name=' + k + '],textarea[id=' + k
+//						+ '],select[name=' + k + '],select[id=' + k + ']'));
+				_deserializeInputs(input, val);
+			}
+		}
+
+		// 填充第一层数据
+		var inputs = _filterInputs(frm);
+		// var inputs = frm
+		// .find('input[type!=button][type!=reset][type!=submit][type!=image][type!=file],select,textarea');
+		for ( var key in objects) {
+			var value = objects[key];
+			var input = _findInputs(inputs,key);
+			// var input = $(inputs.filter('input[name=' + key + '],input[id='
+			// + key + '],textarea[name=' + key + '],textarea[id=' + key
+			// + '],select[name=' + key + '],select[id=' + key + ']'));
+			_deserializeInputs(input, value);
+		}
+
+		inputs.filter('._isSerialized').removeClass('_isSerialized');
+		return this;
 	}
 };
+
+var json = {
+	"image" : "IMAGE -VALUE",
+	"hide" : "_VALUE111",
+	"fileurl" : "C:txt",
+	'number' : 1008655,
+	"email" : "123@xy.com",
+	"month" : "11",
+	"week" : "Sat.",
+	"time" : "11:23:11",
+	"dtl" : "2011-12-23 12:12:12",
+	"dt" : "2011-12-23 12:12:12",
+	"date" : "2011-12-23",
+	"color" : "#ddd",
+	"radiox" : "2",
+	"chk1" : true,
+	"chk0" : false,
+	"basic" : {
+		pwd : 'qwert',
+		txt : 'yiui'
+	},
+	"user" : {
+		number : 111,
+		range : 12131,
+		sch : 'sdfsaf',
+		tel : '145',
+		url : 'http://',
+		content : 'content content content...'
+	},
+	sel : '2'
+}
