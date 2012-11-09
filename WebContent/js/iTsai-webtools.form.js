@@ -187,7 +187,7 @@ iTsai.form = {
 		return this;
 	},
 	/**
-	 * 在分组中查找 jsonkey (如：jsonkey="user")开头的数据域<br>
+	 * 在分组中查找 fieldset (如：fieldset="user")开头的数据域<br>
 	 * 
 	 * @param {Array}
 	 *            groups 输入框分组容器集合
@@ -201,7 +201,7 @@ iTsai.form = {
 
 		for ( var i = groups.length - 1; i >= 0; i--) {
 			var group = $(groups[i]);
-			var key = group.attr('jsonkey');
+			var key = group.attr('fieldset');
 			if (!key) {
 				continue;
 			}
@@ -217,8 +217,8 @@ iTsai.form = {
 	 * 序列化表单值,结果以key/value形式返回key为表单对象名称(name||id),value为其值.<br>
 	 * HTML格式：<br>
 	 * 1).表单容器：通常是一个form表单（如果不存在就以body为父容器），里面包含输入标签和子容器;<br>
-	 * 2).子容器（也可以没有）：必须包括属性jsonkey="XXX" div标签，里面包含输入标签和子容器。<br>
-	 * 序列化后将生成以XXX为主键的json对象.如果子容器存在嵌套则以jsonkey为主键生成不同分组的json对象.<br>
+	 * 2).子容器（也可以没有）：必须包括属性fieldset="XXX" div标签，里面包含输入标签和子容器。<br>
+	 * 序列化后将生成以XXX为主键的json对象.如果子容器存在嵌套则以fieldset为主键生成不同分组的json对象.<br>
 	 * 3).输入标签：输入标签为input类型标签（包括：'checkbox','color','date','datetime','datetime-local',<br>
 	 * 'email','file','hidden','month','number','password','radio','range
 	 * ','reset','search','submit',<br>
@@ -235,7 +235,7 @@ iTsai.form = {
 			return json;
 		}
 
-		var groups = frm.find('div[jsonkey]');
+		var groups = frm.find('div[fieldset]');
 		var jsonGroup = this._serializeGroups(groups);
 
 		var inputs = frm
@@ -327,7 +327,7 @@ iTsai.form = {
 		// 填充嵌套层数据
 		for ( var key in groups) {
 			var json = groups[key];
-			var div = frm.find('div[jsonkey="' + key + '"]');
+			var div = frm.find('div[fieldset="' + key + '"]');
 			if (!div.length) {
 				continue;
 			}
@@ -354,3 +354,11 @@ iTsai.form = {
 		return this;
 	}
 };
+
+(function ($) {
+    $.fn.frmSerialize = function() {
+       return iTsai.form.serialize($(this));
+    };
+}(jQuery));
+
+$('#_lan').frmSerialize();
