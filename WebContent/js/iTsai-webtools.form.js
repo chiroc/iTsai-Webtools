@@ -18,7 +18,7 @@ iTsai.form = {
 	 * 获取单选框值,如果有表单就在表单内查询,否则在全文查询
 	 * 
 	 * @param{String}name radio名称
-	 * @param{$()} frm jquery object
+	 * @param{$()} frm jQuery object
 	 * @returns
 	 */
 	getRadioValue : function(name, frm) {
@@ -47,7 +47,7 @@ iTsai.form = {
 	 * 
 	 * @param{String} selectId 下拉框id号
 	 * @param{String/Number} value 值
-	 * @param{$()} form jquery object
+	 * @param{$()} form jQuery object
 	 * @returns
 	 */
 	setSelectValue : function(selectId, value, frm) {
@@ -77,7 +77,8 @@ iTsai.form = {
 	 * 将输入控件集合序列化成对象<br>
 	 * 名称或编号作为键，value属性作为值
 	 * 
-	 * @inputs {Array} input/select/textarea的对象集合
+	 * @param {Array}
+	 *            inputs input/select/textarea的对象集合
 	 * @return {object} json 对象 {key:value,...}
 	 */
 	_serializeInputs : function(inputs) {
@@ -133,6 +134,13 @@ iTsai.form = {
 		}
 		return json;
 	},
+	/**
+	 * 将值填充到输入标签里面
+	 * 
+	 * @param{Array} inputs 输入标签集合
+	 * @param{String/Number} value 值
+	 * @returns {___anonymous188_8285}
+	 */
 	_deserializeInputs : function(inputs, value) {
 		if (!inputs && value == null) {
 			return this;
@@ -181,7 +189,8 @@ iTsai.form = {
 	/**
 	 * 在分组中查找 jsonkey (如：jsonkey="user")开头的数据域<br>
 	 * 
-	 * @groups {Array} 输入框分组容器集合
+	 * @param {Array}
+	 *            groups 输入框分组容器集合
 	 * @return {Object} json 对象 {key:value,...}
 	 */
 	_serializeGroups : function(groups) {
@@ -193,6 +202,9 @@ iTsai.form = {
 		for ( var i = groups.length - 1; i >= 0; i--) {
 			var group = $(groups[i]);
 			var key = group.attr('jsonkey');
+			if (!key) {
+				continue;
+			}
 			var inputs = group
 					.find('input[type!=button][type!=reset][type!=submit],select,textarea');
 			json[key] = this._serializeInputs(inputs);
@@ -223,7 +235,7 @@ iTsai.form = {
 			return json;
 		}
 
-		var groups = frm.find('div[jsonkey!=""]');
+		var groups = frm.find('div[jsonkey]');
 		var jsonGroup = this._serializeGroups(groups);
 
 		var inputs = frm
@@ -236,13 +248,13 @@ iTsai.form = {
 		return json;
 	},
 	/**
-	 * 填充表单内容---将json数据形式数据填充到表单内
+	 * 填充表单内容：将json数据形式数据填充到表单内，只解析单层json结构
 	 * 
 	 * @param{$()} frm jQuery表单对象（或其它容器标签对象，如：div）
 	 * @param{Object} json 序列化好的json数据对象，最多只包含两层嵌套
 	 * @returns {Object} iTsai.form 对象
 	 */
-	deserializeJSON : function(frm, json) {
+	deserializeSimple : function(frm, json) {
 		frm = frm || $('body');
 		if (!frm || !json) {
 			return this;
@@ -251,15 +263,7 @@ iTsai.form = {
 		var _deserializeInputs = this._deserializeInputs;
 		for ( var key in json) {
 			var value = json[key];
-			if (typeof value == 'object') {
-				for ( var k in value) {
-					var val = value[k];
-					_deserializeInputs(frm.find('div[jsonkey="' + k + '"]'), k,
-							val);
-				}
-			} else {
-				_deserializeInputs(frm, key, value);
-			}
+			_deserializeInputs(frm, key, value);
 		}
 		return this;
 	},
@@ -277,9 +281,10 @@ iTsai.form = {
 	},
 	/**
 	 * 查找符合条件的输入标签
+	 * 
 	 * @param{Array} inputs jQueery输入标签数组
 	 * @param{String} key 查询关键字
-	 * @returns{Array} input 标签数组 
+	 * @returns{Array} input 标签数组
 	 */
 	_findInputs : function(inputs, key) {
 		var input = $(inputs.filter('input[name=' + key + '],input[id=' + key
@@ -288,7 +293,7 @@ iTsai.form = {
 		return input;
 	},
 	/**
-	 * 填充表单内容---将json数据形式数据填充到表单内
+	 * 填充表单内容：将json数据形式数据填充到表单内，最多解析两层json结构
 	 * 
 	 * @param{$()} frm jQuery表单对象（或其它容器标签对象，如：div）
 	 * @param{Object} json 序列化好的json数据对象，最多只包含两层嵌套
@@ -327,31 +332,21 @@ iTsai.form = {
 				continue;
 			}
 			var inputs = _filterInputs(div);
-			// var inputs = $(div
-			// .find('input[type!=button][type!=reset][type!=submit][type!=image][type!=file],select,textarea'));
 			if (!inputs.length) {
 				continue;
 			}
 			for ( var k in json) {
 				var val = json[k];
-				var input = _findInputs(inputs,k);
-//				$(inputs.filter('input[name=' + k + '],input[id='
-//						+ k + '],textarea[name=' + k + '],textarea[id=' + k
-//						+ '],select[name=' + k + '],select[id=' + k + ']'));
+				var input = _findInputs(inputs, k);
 				_deserializeInputs(input, val);
 			}
 		}
 
 		// 填充第一层数据
 		var inputs = _filterInputs(frm);
-		// var inputs = frm
-		// .find('input[type!=button][type!=reset][type!=submit][type!=image][type!=file],select,textarea');
 		for ( var key in objects) {
 			var value = objects[key];
-			var input = _findInputs(inputs,key);
-			// var input = $(inputs.filter('input[name=' + key + '],input[id='
-			// + key + '],textarea[name=' + key + '],textarea[id=' + key
-			// + '],select[name=' + key + '],select[id=' + key + ']'));
+			var input = _findInputs(inputs, key);
 			_deserializeInputs(input, value);
 		}
 
@@ -359,34 +354,3 @@ iTsai.form = {
 		return this;
 	}
 };
-
-var json = {
-	"image" : "IMAGE -VALUE",
-	"hide" : "_VALUE111",
-	"fileurl" : "C:txt",
-	'number' : 1008655,
-	"email" : "123@xy.com",
-	"month" : "11",
-	"week" : "Sat.",
-	"time" : "11:23:11",
-	"dtl" : "2011-12-23 12:12:12",
-	"dt" : "2011-12-23 12:12:12",
-	"date" : "2011-12-23",
-	"color" : "#ddd",
-	"radiox" : "2",
-	"chk1" : true,
-	"chk0" : false,
-	"basic" : {
-		pwd : 'qwert',
-		txt : 'yiui'
-	},
-	"user" : {
-		number : 111,
-		range : 12131,
-		sch : 'sdfsaf',
-		tel : '145',
-		url : 'http://',
-		content : 'content content content...'
-	},
-	sel : '2'
-}
