@@ -43,7 +43,7 @@ iTsai.layer = {
 		}
 		$('body').append(div);
 		_resetPos();
-		$(window).bind('resize', function() {
+		$(window).bind('resize scroll', function() {
 			_resetPos();
 		});
 	},
