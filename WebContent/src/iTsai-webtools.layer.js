@@ -9,6 +9,7 @@
 	if (!window.iTsai)
 		iTsai = {};
 })();
+
 iTsai.layer = {
 	toString : function() {
 		return 'iTsai.layer';

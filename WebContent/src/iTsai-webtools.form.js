@@ -275,6 +275,18 @@ iTsai.form = {
 		return html.join('');
 	},
 	/**
+	 * 禁用输入控件
+	 * 
+	 * @param{Object} frmObj iQuery表单对象（或其它任何包装容器，如：div）
+	 * @param disabled
+	 */
+	formDisable : function(frmObj, disabled) {
+		if ($.isPlainObject(frmObj)) {
+			frmObj.find('input,select,textarea').attr('disabled', disabled);
+		}
+		return this;
+	},
+	/**
 	 * 将输入控件集合序列化成对象<br>
 	 * 名称或编号作为键，value属性作为值
 	 * 
@@ -545,4 +557,3 @@ iTsai.form = {
 		return this;
 	}
 };
-

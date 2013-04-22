@@ -35,7 +35,7 @@ iTsai.array = {
 	 * @param{Array} sArr 减数据
 	 * @returns []
 	 */
-	arrayDive : function(mArr, sArr) {
+	arrayReduce : function(mArr, sArr) {
 		if (!sArr) {
 			return mArr;
 		}

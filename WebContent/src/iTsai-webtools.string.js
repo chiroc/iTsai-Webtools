@@ -175,7 +175,7 @@ String.prototype.lf2crlf = function() {
 	return this.replace(/(\n+)/g, "\r\n");
 };
 /**
- * 格式化字符串,将{n},替换为对应的参数，如：'I {0}&{1} China.'.fillArgs('love','like'); 输出："I
+ * 格式化字符串,将{n},替换为对应的参数，如：'I {0}&{1} China.'.formatArgs('love','like'); 输出："I
  * love&like China."
  * 
  * @method fillArgs

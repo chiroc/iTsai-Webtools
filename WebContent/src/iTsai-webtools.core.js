@@ -108,11 +108,11 @@ iTsai = {
 		return clr == '#0' ? '#000000' : clr;
 	},
 	/**
-	 * 获取语言代码,如:'zh-cn'
+	 * 获取语言代码,如:'zh-CN'
 	 */
 	getLang : function() {
 		var nav = window.navigator;
-		return (nav.language || nav.userLanguage).toLowerCase();
+		return (nav.language || nav.userLanguage);
 	},
 	/**
 	 * 取消事件冒泡

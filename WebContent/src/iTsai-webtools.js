@@ -5,7 +5,6 @@
  */
 
 
-
 /**
  * 将函数注册到jQuery对象 TODO delete
  */
