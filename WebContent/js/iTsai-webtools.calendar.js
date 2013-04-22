@@ -12,7 +12,7 @@
 
 iTsai.calendar = {
 	toString : function() {
-		return 'iTsai.calendar - 日期时间处理工具';
+		return 'iTsai.calendar';
 	},
 	/**
 	 * 将秒转换为时间hh:mm:ss格式
@@ -24,14 +24,13 @@ iTsai.calendar = {
 		if (secs < 0) {
 			secs = 0;
 		}
-		secs = parseInt(secs);
-		var hours = Math.floor(secs / 3600);
-		var mins = Math.floor((secs % 3600) / 60);
-		var sec = secs % 3600 % 60;
-		return this.fillZero(hours) + ':' + this.fillZero(mins) + ':'
-				+ this.fillZero(sec);
+		secs = parseInt(secs, 10);
+		var hours = Math.floor(secs / 3600), mins = Math
+				.floor((secs % 3600) / 60), sec = secs % 3600 % 60;
+		return this.zeroCompletion(hours) + ':' + this.zeroCompletion(mins)
+				+ ':' + this.zeroCompletion(sec);
 	},
-	fillZero : function(time) {
+	zeroCompletion : function(time) {
 		if (time < 10) {
 			return '0' + time;
 		}
@@ -40,8 +39,8 @@ iTsai.calendar = {
 	/**
 	 * 格式化日期时间字符串
 	 * 
-	 * @param{Date} dt datetime
-	 * @param{String} fmt format string. 'yyyy-MM-dd hh:mm:ss'
+	 * @param{Date} dt 日期对象
+	 * @param{String} fmt 格式化字符串，如：'yyyy-MM-dd hh:mm:ss'
 	 * @returns
 	 */
 	dateTime2str : function(dt, fmt) {
@@ -61,46 +60,10 @@ iTsai.calendar = {
 		});
 	},
 	/**
-	 * 初始化日期时间控件控件分日期(#x_date)、时(#x_h)、分(#x_m)、秒(#x_s)
-	 * 
-	 * @param {String}calendarId
-	 *            日期控件前缀
-	 * @param {String}
-	 *            datetime 完整时间格式'yyyy-MM-dd hh:mm:ss'
-	 */
-	setWidgetDatetime : function(calendarId, datetime) {
-		var _datetime = datetime
-				|| this.dateTime2str(new Date(), 'yyyy-MM-dd hh:mm:ss');
-		var dt = _datetime.split(' ');
-		$('#' + calendarId + '_date').val(dt[0]);
-		var t = dt[1].split(':');
-		$('#' + calendarId + '_h').val(t[0]);
-		$('#' + calendarId + '_m').val(t[1]);
-		$('#' + calendarId + '_s').val(t[2]);
-	},
-	/**
-	 * 获取日期时分秒:2012-02-22 14:34:47<br>
-	 * 日期和时间控件ID格式要完全统一
-	 * 
-	 * @param{String} calendarId 日期控件ID,时/分/少分别+'_h'/'_m'/'_s'
-	 */
-	getWidgetDatetime : function(calendarId) {
-		var zz = '00';
-		var dd = ':';
-		var date = $('#' + calendarId + '_date').val();
-		date = !date ? this.date() : date;
-		var h = $('#' + calendarId + '_h').val();
-		h = !h ? zz : h;
-		var m = $('#' + calendarId + '_m').val();
-		m = !m ? zz : m;
-		var s = $('#' + calendarId + '_s').val();
-		s = !s ? zz : s;
-		return [ date, ' ', h, dd, m, dd, s ].join('');
-	},
-	/**
 	 * 根据日期时间格式获取获取当前日期时间
 	 * 
-	 * @prarm{String} "yyyy-MM-dd hh:mm:ss";
+	 * @prarm{String} 日期时间格式，如："yyyy-MM-dd hh:mm:ss";
+	 * @return{String} 格式化后的日期时间字符串
 	 */
 	dateTimeWrapper : function(fmt) {
 		if (arguments[0])
@@ -110,29 +73,43 @@ iTsai.calendar = {
 	/**
 	 * 获取当前日期时间
 	 * 
-	 * @param{String} arguments 可设置一个日期时间格式,如:'yyyy/MM/dd hh:mm:ss'
+	 * @param{String} fmt 日期时间格式，默认为简体标准日期时间格式'yyyy/MM/dd hh:mm:ss'
 	 * @returns
 	 */
-	getDatetime : function() {
-		return this.dateTimeWrapper('yyyy-MM-dd hh:mm:ss');
+	getDatetime : function(fmt) {
+		return this.dateTimeWrapper(fmt || 'yyyy-MM-dd hh:mm:ss');
 	},
 	/**
 	 * 获取当前日期时间+毫秒
+	 * 
+	 * @param{String} fmt 日期时间格式，默认为简体标准日期时间格式'yyyy-MM-dd hh:mm:ss'
 	 * @returns {String}
 	 */
-	getDatetimes : function() {
+	getDatetimes : function(fmt) {
 		var dt = new Date();
-		return this.dateTime2str(dt, 'yyyy-MM-dd hh:mm:ss') + '.'
+		return this.dateTime2str(dt, fmt || 'yyyy-MM-dd hh:mm:ss') + '.'
 				+ dt.getMilliseconds();
 	},
-	getDate : function() {
-		return this.dateTimeWrapper('yyyy-MM-dd');
-	},
-	getTime : function() {
-		return this.dateTimeWrapper('hh:mm:ss');
+	/**
+	 * 获取当前日期（年-月-日）
+	 * 
+	 * @param{String} fmt 日期格式，默认为简体标准日期格式
+	 * @returns {String}
+	 */
+	getDate : function(fmt) {
+		return this.dateTimeWrapper(fmt || 'yyyy-MM-dd');
 	},
 	/**
-	 * 初始化日期段选择器
+	 * 获取当前时间（时:分:秒）
+	 * 
+	 * @param{String} fmt 日期格式，默认为简体标准时间格式
+	 * @returns {String}
+	 */
+	getTime : function(fmt) {
+		return this.dateTimeWrapper(fmt || 'hh:mm:ss');
+	},
+	/**
+	 * 初始化日期段选择器，依赖于jQueryUI的日期控件
 	 * 
 	 * @param{String} datefrom 开始日期id
 	 * @param{String} dateto 结束日期id

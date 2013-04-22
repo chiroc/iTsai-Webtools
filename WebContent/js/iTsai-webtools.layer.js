@@ -9,13 +9,10 @@
 	if (!window.iTsai)
 		iTsai = {};
 })();
-
 iTsai.layer = {
 	toString : function() {
-		return 'iTsai.layer - 遮盖层工具，包括页面遮盖和元素遮盖等';
+		return 'iTsai.layer';
 	},
-	color : '#999',
-	opacity : 0.5,
 	/**
 	 * 创建遮盖层(如果已经存在遮蔽层就先清除)
 	 * 
@@ -26,12 +23,11 @@ iTsai.layer = {
 			this.clear();
 		}
 		var tip = "数据处理中...";
-		if (content != null) {
+		if (!content) {
 			tip = content;
 		}
-		var div = $('<div></div>');
-		var doc = $(document);
-		var txt = $([ '<span>', tip, '</span>' ].join(''));
+		var div = $('<div></div>'), doc = $(document), txt = $([ '<span>', tip,
+				'</span>' ].join(''));
 		div.attr('id', 'itsai-layer').html(txt);
 		function _resetPos() {
 			var offset = doc.height() / 2 + doc.scrollTop();
@@ -72,20 +68,17 @@ iTsai.layer = {
 	/**
 	 * 为对象添加遮盖层
 	 * 
-	 * @param{$()} obj
+	 * @param{Object} obj jQuery对象
 	 * @param{String} info 显示信息
 	 */
 	mask : function(obj, info) {
 		if (!obj)
 			return false;
 		$('#' + obj.attr('masker')).remove();
-		var id = 'itsai-mask-' + iTsai.util.random();
-		var o_h = obj.outerHeight();
-		var o_w = obj.outerWidth();
-		var pos = obj.position();
-		var txt = $([ '<div>', (info ? info : ''), '</div>' ].join(''));
-		var mask = $([ '<div class="itsai-mask" id="', id, '"></div>' ]
-				.join(''));
+		var id = 'itsai-mask-' + iTsai.random(), o_h = obj.outerHeight(), o_w = obj
+				.outerWidth(), pos = obj.position(), txt = $([ '<div>',
+				(info ? info : ''), '</div>' ].join('')), mask = $([
+				'<div class="itsai-mask" id="', id, '"></div>' ].join(''));
 		obj.after(mask).attr('masker', id);
 		mask.append(txt).css({
 			position : 'absolute',
@@ -101,9 +94,9 @@ iTsai.layer = {
 		return mask;
 	},
 	/**
-	 * 清除mask
+	 * 清除对象mask
 	 * 
-	 * @param{$()} obj 被屏蔽的对象,如果没有就清除所有对象mask
+	 * @param{Object} obj jQuery对象 被屏蔽的对象,如果没有就清除所有对象mask
 	 */
 	clearMask : function(obj) {
 		if (obj) {
@@ -111,5 +104,35 @@ iTsai.layer = {
 		} else {
 			$('.itsai-mask').remove();
 		}
+	},
+	/**
+	 * 将元素移动到文档中间
+	 * 
+	 * @param{Object} obj jQuery对象
+	 * @param{Boolean} adaptive 自动适应文档可视区大小同时改变对象位置
+	 * @param{Number} zIndex 层叠顺序
+	 * @returns{Object} obj jQuery对象
+	 */
+	move2Center : function(obj, adaptive, zIndex) {
+		if (obj) {
+			var doc = $(document);
+			function _resetPos() {
+				obj.css({
+					'z-index' : zIndex ? zIndex : 0,
+					position : 'absolute',
+					left : (doc.width() - obj.width()) / 2,
+					top : doc.scrollTop()
+							+ (($.browser.msie ? doc.height()
+									: window.innerHeight) - obj.height()) / 2
+				});
+			}
+			_resetPos();
+			if (adaptive) {
+				$(window).bind('resize scroll', function() {
+					_resetPos();
+				});
+			}
+		}
+		return obj;
 	}
 };

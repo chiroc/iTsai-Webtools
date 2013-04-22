@@ -12,7 +12,7 @@
 
 iTsai.regexp = {
 	toString : function() {
-		return 'iTsai.layer - 常用正则表达式';
+		return 'iTsai.regexp';
 	},
 	domain : /^[\w-]*(\.[\w-]*)+/ig,
 	url : /https?:\/\/[\w-]*(\.[\w-]*)+/ig,

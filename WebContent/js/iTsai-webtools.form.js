@@ -1,18 +1,218 @@
-/**
- * iTsai WebTools(Web开发工具集)
- * 
- * @author Chihpeng Tsai(470597142@qq.com)
- * @description 表单处理工具.
- */
-
 (function() {
 	if (!window.iTsai)
 		iTsai = {};
 })();
 
+/**
+ * iTsai WebTools(Web开发工具集) <br>
+ * 表单处理工具
+ * 
+ * @author Chihpeng Tsai(470597142@qq.com)
+ */
 iTsai.form = {
 	toString : function() {
-		return 'iTsai.form - 表单处理工具';
+		return 'iTsai.form';
+	},
+	/**
+	 * 常用键盘码对象
+	 * 
+	 * @type {Object}
+	 * @namespace iTsai
+	 * @module iTsai.form.KEYCODE
+	 * @class KEYCODE
+	 */
+	KEYCODE : {
+		/**
+		 * 全屏F11(122)
+		 * 
+		 * @type {Number}
+		 * @property F11
+		 */
+		F11 : 122,
+		/**
+		 * 退出Esc(27)
+		 * 
+		 * @type {Number}
+		 * @property ESC
+		 */
+		ESC : 27,
+		/**
+		 * 回车Enter(13)
+		 * 
+		 * @type {Number}
+		 * @property ENTER
+		 */
+		ENTER : 13,
+		/**
+		 * 上一页Page Up(33)
+		 * 
+		 * @type {Number}
+		 * @property PAGEUP
+		 */
+		PAGEUP : 33,
+		/**
+		 * 下一页Page Down(34)
+		 * 
+		 * @type {Number}
+		 * @property PAGEDOWN
+		 */
+		PAGEDOWN : 34,
+		/**
+		 * 页尾end(35)
+		 * 
+		 * @type {Number}
+		 * @property END
+		 */
+		END : 35,
+		/**
+		 * 页首home(36)
+		 * 
+		 * @type {Number}
+		 * @property HOME
+		 */
+		HOME : 36,
+		/**
+		 * 左箭头left(37)
+		 * 
+		 * @type {Number}
+		 * @property LEFT
+		 */
+		LEFT : 37,
+		/**
+		 * 向上箭头up(38)
+		 * 
+		 * @type {Number}
+		 * @property UP
+		 */
+		UP : 38,
+		/**
+		 * 右前头(39)
+		 * 
+		 * @type {Number}
+		 * @property RIGHT
+		 */
+		RIGHT : 39,
+		/**
+		 * 向下箭头down(40)
+		 * 
+		 * @type {Number}
+		 * @property DOWN
+		 */
+		DOWN : 40
+	},
+	/**
+	 * 绑定键盘事件到元素，当焦点在元素上并触发键盘事件时响应该函数
+	 * 
+	 * @param{Object} element 被绑定元素的jQuery对象
+	 * @param{Function} callback 回调函数，参数为绑定的元素对象element和事件e
+	 */
+	_bindKey : function(keyCode, element, callback) {
+		element.keydown(function(e) {
+			if (e.keyCode == keyCode) {
+				if (typeof callback == 'function')
+					callback(element, e);
+			}
+		});
+	},
+	/**
+	 * 在element区域内响应Enter键盘事件<br>
+	 * 实际处理中应该将提交按键(type="submit")放在element区域外,避免重复提交
+	 * 
+	 * @param{Object} element 被绑定元素的jQuery对象
+	 * @param{Function} callback 回调函数，参数为绑定的元素对象element和事件e
+	 * @returns {Object} iTsai.form
+	 */
+	bindEnterKey : function(element, callback) {
+		this._bindKey(this.KEYCODE.ENTER, element, callback);
+		return this;
+	},
+	/**
+	 * 在element区域内响应Esc键盘事件<br>
+	 * 
+	 * @param{Object} element 被绑定元素的jQuery对象
+	 * @param{Function} callback 回调函数，参数为绑定的元素对象element和事件e
+	 * @returns {Object} iTsai.form
+	 */
+	bindEscKey : function(element, callback) {
+		this._bindKey(this.KEYCODE.ESC, element, callback);
+		return this;
+	},
+	/**
+	 * 在element区域内响应F11键盘事件<br>
+	 * 
+	 * @param{Object} element 被绑定元素的jQuery对象
+	 * @param{Function} callback 回调函数，参数为绑定的元素对象element和事件e
+	 * @returns {Object} iTsai.form
+	 */
+	bindF11Key : function(element, callback) {
+		this._bindKey(this.KEYCODE.F11, element, callback);
+		return this;
+	},
+	/**
+	 * 在element区域内响应Page Down键盘事件<br>
+	 * 
+	 * @param{Object} element 被绑定元素的jQuery对象
+	 * @param{Function} callback 回调函数，参数为绑定的元素对象element和事件e
+	 * @returns {Object} iTsai.form
+	 */
+	bindPageDownKey : function(element, callback) {
+		this._bindKey(this.KEYCODE.PAGEDOWN, element, callback);
+		return this;
+	},
+	/**
+	 * 在element区域内响应Page Up键盘事件<br>
+	 * 
+	 * @param{Object} element 被绑定元素的jQuery对象
+	 * @param{Function} callback 回调函数，参数为绑定的元素对象element和事件e
+	 * @returns {Object} iTsai.form
+	 */
+	bindPageUpKey : function(element, callback) {
+		this._bindKey(this.KEYCODE.PAGEUP, element, callback);
+		return this;
+	},
+	/**
+	 * 在element区域内响应Left键盘事件<br>
+	 * 
+	 * @param{Object} element 被绑定元素的jQuery对象
+	 * @param{Function} callback 回调函数，参数为绑定的元素对象element和事件e
+	 * @returns {Object} iTsai.form
+	 */
+	bindLeftKey : function(element, callback) {
+		this._bindKey(this.KEYCODE.LEFT, element, callback);
+		return this;
+	},
+	/**
+	 * 在element区域内响应Right键盘事件<br>
+	 * 
+	 * @param{Object} element 被绑定元素的jQuery对象
+	 * @param{Function} callback 回调函数，参数为绑定的元素对象element和事件e
+	 * @returns {Object} iTsai.form
+	 */
+	bindRightKey : function(element, callback) {
+		this._bindKey(this.KEYCODE.RIGHT, element, callback);
+		return this;
+	},
+	/**
+	 * 在element区域内响应Up键盘事件<br>
+	 * 
+	 * @param{Object} element 被绑定元素的jQuery对象
+	 * @param{Function} callback 回调函数，参数为绑定的元素对象element和事件e
+	 * @returns {Object} iTsai.form
+	 */
+	bindUpKey : function(element, callback) {
+		this._bindKey(this.KEYCODE.UP, element, callback);
+		return this;
+	},
+	/**
+	 * 在element区域内响应Down键盘事件<br>
+	 * 
+	 * @param{Object} element 被绑定元素的jQuery对象
+	 * @param{Function} callback 回调函数，参数为绑定的元素对象element和事件e
+	 * @returns {Object} iTsai.form
+	 */
+	bindDownKey : function(element, callback) {
+		this._bindKey(this.KEYCODE.DOWN, element, callback);
+		return this;
 	},
 	/**
 	 * 获取单选框值,如果有表单就在表单内查询,否则在全文查询
@@ -58,20 +258,21 @@ iTsai.form = {
 				'selected', true);
 	},
 	/**
-	 * 在id区域内执行回车提交数据<br>
-	 * 实际处理中应该将提交按键放在id区域外,避免重复提交
+	 * 将object转换为select的列表模式，key为option的value，值为option的文本
 	 * 
-	 * @param{String} id 被绑定对象的ID号
-	 * @param{Function} fn 要选择的函数
-	 * @returns {Boolean}
+	 * @param objects
+	 *            key-map对象
+	 * @returns{String} html
 	 */
-	bindingEnterKey : function(id, fn) {
-		$('#' + id).keydown(function(e) {
-			if (e.keyCode == 13) {
-				if (fn)
-					fn();
-			}
-		});
+	object2Options : function(objects) {
+		if (!$.isPlainObject(objects)) {
+			return '';
+		}
+		var html = [];
+		for ( var i in objects) {
+			html.push('<option value="' + i + '">' + objects[i] + '</option>');
+		}
+		return html.join('');
 	},
 	/**
 	 * 将输入控件集合序列化成对象<br>
@@ -87,15 +288,12 @@ iTsai.form = {
 			return json;
 		}
 		for ( var i = inputs.length - 1; i >= 0; i--) {
-			var input = $(inputs[i]);
-			var type = input.attr('type');
+			var input = $(inputs[i]), type = input.attr('type');
 			if (type) {
 				type = type.toLowerCase();
 			}
-			var tagName = input.get(0).tagName;
-			var id = input.attr('id');
-			var name = input.attr('name');
-			var value = null;
+			var tagName = input.get(0).tagName, id = input.attr('id'), name = input
+					.attr('name'), value = null;
 
 			// 判断输入框是否已经序列化过
 			if (input.hasClass('_isSerialized')) {
@@ -235,12 +433,10 @@ iTsai.form = {
 			return json;
 		}
 
-		var groups = frm.find('div[fieldset]');
-		var jsonGroup = this._serializeGroups(groups);
-
-		var inputs = frm
-				.find('input[type!=button][type!=reset][type!=submit][type!=image],select,textarea');
-		var json = this._serializeInputs(inputs);
+		var groups = frm.find('div[fieldset]'), jsonGroup = this
+				._serializeGroups(groups), inputs = frm
+				.find('input[type!=button][type!=reset][type!=submit][type!=image],select,textarea'), json = this
+				._serializeInputs(inputs);
 
 		for ( var key in jsonGroup) {
 			json[key] = jsonGroup[key];
@@ -305,29 +501,26 @@ iTsai.form = {
 			return this;
 		}
 
-		// 缓存json第一层数据对象
-		var objects = {};
-		// 缓存json嵌套层数据（第二层），将首先被赋值，以避免覆盖
-		var groups = {};
+		// objects缓存json第一层数据对象;
+		// groups缓存json嵌套层数据（第二层），将首先被赋值，以避免覆盖
+		var objects = {}, groups = {};
 
 		// 数据分组
 		for ( var key in json) {
 			var value = json[key];
-			if (typeof value == 'object') {
+			if ($.isPlainObject(value)) {
 				groups[key] = value;
 			} else {
 				objects[key] = value;
 			}
 		}
 
-		var _deserializeInputs = this._deserializeInputs;
-		var _filterInputs = this._filterInputs;
-		var _findInputs = this._findInputs;
+		var _deserializeInputs = this._deserializeInputs, _filterInputs = this._filterInputs, _findInputs = this._findInputs;
 
 		// 填充嵌套层数据
 		for ( var key in groups) {
-			var json = groups[key];
-			var div = frm.find('div[fieldset="' + key + '"]');
+			var json = groups[key], div = frm.find('div[fieldset="' + key
+					+ '"]');
 			if (!div.length) {
 				continue;
 			}
@@ -336,8 +529,7 @@ iTsai.form = {
 				continue;
 			}
 			for ( var k in json) {
-				var val = json[k];
-				var input = _findInputs(inputs, k);
+				var val = json[k], input = _findInputs(inputs, k);
 				_deserializeInputs(input, val);
 			}
 		}
@@ -345,8 +537,7 @@ iTsai.form = {
 		// 填充第一层数据
 		var inputs = _filterInputs(frm);
 		for ( var key in objects) {
-			var value = objects[key];
-			var input = _findInputs(inputs, key);
+			var value = objects[key], input = _findInputs(inputs, key);
 			_deserializeInputs(input, value);
 		}
 
@@ -355,10 +546,3 @@ iTsai.form = {
 	}
 };
 
-(function ($) {
-    $.fn.frmSerialize = function() {
-       return iTsai.form.serialize($(this));
-    };
-}(jQuery));
-
-$('#_lan').frmSerialize();

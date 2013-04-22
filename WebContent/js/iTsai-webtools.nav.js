@@ -12,16 +12,16 @@
 
 iTsai.nav = {
 	toString : function() {
-		return 'iTsai.layer - 页面导航工具等';
+		return 'iTsai.nav';
 	},
 	/**
 	 * 获取URL地址栏参数
 	 * 
 	 * @param{String} name 参数名
 	 * @prarm{String} url URL地址默认为当前URL
- 	 * @returns
+	 * @returns
 	 */
-	getParameter : function(name,url) {
+	getParameter : function(name, url) {
 		var paramStr = url || window.location.search;
 		if (paramStr.length == 0) {
 			return null;
@@ -29,9 +29,7 @@ iTsai.nav = {
 		if (paramStr.charAt(0) != "?") {
 			return null;
 		}
-		paramStr = unescape(paramStr);
-		paramStr = paramStr.substring(1);
-
+		paramStr = unescape(paramStr).substring(1);
 		if (paramStr.length == 0) {
 			return null;
 		}
@@ -39,7 +37,7 @@ iTsai.nav = {
 		for ( var i = 0; i < params.length; i++) {
 			var parts = params[i].split('=', 2);
 			if (parts[0] == name) {
-				if (parts.length < 2 || typeof (parts[1]) == "undefined"
+				if (parts.length < 2 || typeof (parts[1]) === "undefined"
 						|| parts[1] == "undefined" || parts[1] == "null")
 					return '';
 				return parts[1];
@@ -62,7 +60,7 @@ iTsai.nav = {
 		return this;
 	},
 	/**
-	 * 转到当前页=刷新
+	 * 转到当前页(刷新页面)
 	 */
 	refreshPage : function() {
 		history.go(0);
@@ -108,9 +106,84 @@ iTsai.nav = {
 	 * about:config -> dom.allow_scripts_to_close_windows = true
 	 */
 	closeWin : function() {
-		var x = 0;
 		window.opener = null;
 		window.open('', '_self');
 		window.close();
+	},
+	/**
+	 * 浏览器名称
+	 * 
+	 * @type {String}
+	 * @property name
+	 */
+	name : '',
+	/**
+	 * 浏览器主版本号,如：8
+	 * 
+	 * @type {String}
+	 * @property version
+	 */
+	version : '',
+	/**
+	 * 浏览器详细版本号,如：8.2.11
+	 * 
+	 * @type {String}
+	 * @property versions
+	 */
+	versions : '',
+	/**
+	 * 获取浏览器Agent信息,并返回包含name/version/versioins键的对象
+	 * 
+	 * @method agent
+	 * @returns{Object} {name : '浏览器名称', version : '浏览器主版本号', versions :
+	 *                  '浏览器详细版本号' }
+	 */
+	agent : function() {
+		var browser = {}, userAgent = navigator.userAgent.toLowerCase(), s;
+		(s = userAgent.match(/msie ([\d.]+)/)) ? browser.ie = s[1]
+				: (s = userAgent.match(/firefox\/([\d.]+)/)) ? browser.firefox = s[1]
+						: (s = userAgent.match(/chrome\/([\d.]+)/)) ? browser.chrome = s[1]
+								: (s = userAgent.match(/opera.([\d.]+)/)) ? browser.opera = s[1]
+										: (s = userAgent
+												.match(/version\/([\d.]+).*safari/)) ? browser.safari = s[1]
+												: 0;
+
+		var name = '', version = '';
+		if (browser.ie) {
+			name = 'msie';
+			version = browser.ie;
+		} else if (browser.firefox) {
+			name = 'firefox';
+			version = browser.firefox;
+		} else if (browser.chrome) {
+			name = 'chrome';
+			version = browser.chrome;
+		} else if (browser.opera) {
+			name = 'opera';
+			version = browser.opera;
+		} else if (browser.safari) {
+			name = 'safari';
+			version = browser.safari;
+		} else {
+			name = 'unknown';
+		}
+		return {
+			name : name,
+			version : version.split('.')[0],
+			versions : version
+		};
 	}
 };
+/**
+ * 在页面加载时初始化当前API中部分参数
+ * 
+ * @type {Function} ()
+ * @method ()
+ */
+(function() {
+	// 初始化浏览器信息
+	var nav = iTsai.nav, agent = nav.agent();
+	nav.name = agent.name;
+	nav.version = agent.version;
+	nav.versions = agent.versions;
+})();
