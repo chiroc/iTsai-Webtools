@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Form Serialize & Deserialize</title>
+<script src="js/jquery-1.7.2.min.js"></script>
+<script src="js/iTsai-webtools.form.js"></script>
+</head>
+<style type="text/css">
+.cls {
+	border:2px solid #f00;
+}
+</style>
+<body>
+<input id='kkk'/>
+<input type="button" value="Serialize.." onclick="console.log(iTsai.form.serialize($('#frm')));"/>
+<input type="button" value="Deserialize.." onclick="console.log(iTsai.form.deserialize($('#frm'),json));"/>
+<hr/>
+<form id="frm" name="frm" style="border:1px solid #ccc;padding:20px;">
+  <!-- <input type="button" id="btn1" name="btn" value="btn001">
+  <input type="reset" id="reset" name="reset" value="reset">
+  <input type="submit" id="submit" name="submit" value="submit"> -->
+  <br>
+  <br>
+  <input type="number" id="number2" name="number" value="10086">
+  number <br>
+  <input type="checkbox" id="chk_00" name="chk0" value="chk-0"/>
+  <input type="checkbox" id="chk_01" name="chk1" value="chk-1" checked/>
+  chekckbox <br>
+  <input type="radio" id="radio-0" name="radiox" value="0">
+  <input type="radio" id="radio-1" name="radiox" value="1" checked>
+  <input type="radio" id="radio-2" name="radiox" value="2">
+  radio <br>
+  <select name="sel">
+    <option value="1">1</option>
+    <option value="2" selected>2</option>
+  </select>
+  select <br/>
+  <select id="sel-multi" name="multi" multiple="multiple">
+    <option value="111">111</option>
+    <option value="222" selected="selected">222</option>
+    <option value="333" selected="selected">333</option>
+    <option value="444">444</option>
+  </select>
+  select-multiple<br/>
+  <div fieldset="basic" class="cls">
+    <input type="password" id="pwd" name="pwd" value="123465">
+    password <br>
+    <input type="text" id="txt" name="txt" value="this is my info">
+    text <br>
+  </div>
+  <input type="color" id="clr-01" name="color" value="#fff"/>
+  color <br>
+  <input type="date" id="date" name="date" value="2012-12-23"/>
+  date <br>
+  <input type="datetime" id="dt" name="dt" value="2012-12-23 12:12:12"/>
+  datetime <br>
+  <input type="datetime-local" id="dtl" name="dtl" value="2012-12-23 12:12:12"/>
+  datetime-local <br>
+  <input type="time" id="time" name="time" value="12:23:11">
+  time <br>
+  <input type="week" id="week" name="week" value="Mon.">
+  week <br>
+  <input type="month" id="month" name="month" value="12">
+  month <br>
+  <input type="email" id="email" name="email" value="demo@xy.com"/>
+  email <br>
+  <input type="file" id="file" name="fileurl" value="D:\\txt.txt"/>
+  file <br>
+  <input type="hidden" id="hide" name="hide" value="_VALUE"/>
+  hidden <br>
+  <input type="image" id="image" name="image" src="../image/bt_blue.png" value="imag-value">
+  image <br>
+  <div fieldset="user" class="cls">
+    <input type="number" id="number" name="number" value="10016">
+    number <br>
+    <input type="range" id="range" name="range" min="10" max="110" value="12"/>
+    range <br>
+    <input type="search" id="sch" name="sch" value="search text.." >
+    search <br>
+    <input type="tel" id="tel" name="tel" value="023-11112222">
+    tel <br>
+    <input type="url" id="url" name="url" value="https://www.google.com">
+    url <br>
+    <textarea id="content" name="cont" rows="3" cols="10">textarea info.</textarea>
+  </div>
+</form>
+<script type="text/javascript">
+//测试反序列化
+var json = {
+	"image" : "IMAGE -VALUE",
+	"hide" : "_VALUE111",
+	"fileurl" : "C:txt",
+	'number' : 1008655,
+	"email" : "123@xy.com",
+	"month" : "11",
+	"week" : "Sat.",
+	"time" : "11:23:11",
+	"dtl" : "2011-12-23 12:12:12",
+	"dt" : "2011-12-23 12:12:12",
+	"date" : "2011-12-23",
+	"color" : "#ddd",
+	"radiox" : "2",
+	"chk1" : true,
+	"chk0" : false,
+	"basic" : {
+		pwd : 'qwert',
+		txt : 'yiui'
+	},
+	"user" : {
+		number : 111,
+		range : 12131,
+		sch : 'sdfsaf',
+		tel : '145',
+		url : 'http://',
+		content : 'content content content...'
+	},
+	sel : '2',
+	multi : [111,444]
+};
+
+</script>
+</body>
+</html>
