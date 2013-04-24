@@ -1,9 +1,3 @@
-/**
- * iTsai WebTools(Web开发工具集)
- * 
- * @author Chihpeng Tsai(470597142@qq.com)
- * @description 数组处理工具.
- */
 
 (function() {
 	if (!window.iTsai)
@@ -24,13 +18,23 @@ Array.prototype.indexOf = function(cell) {
 	return -1;
 };
 
+/**
+ * @namespace iTsai.array
+ */
 iTsai.array = {
+	/**
+	 * 显示当前对象名称路径
+	 * 
+	 * @method toString
+	 * @return{String} 'iTsai.array'
+	 */
 	toString : function() {
 		return 'iTsai.array';
 	},
 	/**
 	 * 数据相减:mArr-sArr,得到的数组是mArr的子集
 	 * 
+	 * @method arrayReduce
 	 * @param{Array} mArr 被减数组
 	 * @param{Array} sArr 减数据
 	 * @returns []

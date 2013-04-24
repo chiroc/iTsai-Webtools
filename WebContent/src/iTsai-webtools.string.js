@@ -4,26 +4,65 @@
 })();
 
 /**
- * iTsai WebTools(Web开发工具集)<br>
  * 
- * 在原生String对象基础上添加自定义函数，如：字符串处理工具常用API,包括空白处理、字符统计、字符缓存工具等.
+ * 在原生String对象基础上添加自定义函数，如：字符串处理工具常用API,包括空白处理、字符统计、字符容器等.
  * 
- * @author Chihpeng Tsai(470597142@qq.com)
+ * @namespace iTsai.string
  */
 iTsai.string = {
 	/**
-	 * 字符串容器
+	 * 显示当前对象名称路径
 	 * 
-	 * @param{String/Number} spliter 分隔符,默认为空.
+	 * @method toString
+	 * @return{String} 'iTsai.string'
 	 */
-	StringBuffer : function(spliter) {
+	toString : function() {
+		return 'iTsai.string';
+	},
+	/**
+	 * 字符串容器类
+	 * 
+	 * @Class StringBuffer
+	 * @constructor
+	 */
+	StringBuffer : function() {
 		this._string = [];
-		this.append = function(string) {
-			this._string.push(string);
+		/**
+		 * 向容器内追加数据。
+		 * 
+		 * @method append
+		 * @param{String/Number} str 追加字符串或数字
+		 * @return{Object} iTsai.string.StringBuffer
+		 */
+		this.append = function(str) {
+			var t = typeof str;
+			if (t === 'string' || t === 'number') {
+				this._string.push(str);
+			}
 			return this;
 		};
-		this.toString = function() {
-			return this._string.join(!spliter ? '' : spliter);
+		/**
+		 * 以字符串形式显示容器内数据
+		 * 
+		 * @method toString
+		 * @param{String/Number} spliter [optional,default=''] 字符串分隔符。
+		 * @return{String} 容器内所有字符串行集合
+		 */
+		this.toString = function(spliter) {
+			var t = typeof spliter;
+			if (t !== 'string' && t !== 'number') {
+				spliter = '';
+			}
+			return this._string.join(spliter);
+		};
+		/**
+		 * 以数组形式显示容器内数据
+		 * 
+		 * @method toArray
+		 * @return{Array} 容器数组
+		 */
+		this.toArray = function() {
+			return this._string;
 		};
 	}
 };
@@ -40,43 +79,42 @@ String.prototype.trim = function() {
 /**
  * 去掉字符串中所有的空格
  * 
- * @method trims
+ * @method trimBlanks
  * @returns{String}
  */
-String.prototype.trims = function() {
+String.prototype.trimBlanks = function() {
 	return this.replace(/(\s*)/g, "");
 };
 /**
  * 去掉字符串前面(prefix)的空格blank
  * 
- * @method trimpb
+ * @method trimPreBlank
  * @returns{String}
  */
-String.prototype.trimpb = function() {
+String.prototype.trimPreBlank = function() {
 	return this.replace(/(^\s*)/g, "");
 };
 /**
  * 去掉字符串后面(suffix)的空格blank
  * 
- * @method trimsb
+ * @method trimSufBlank
  * @returns{String}
  */
-String.prototype.trimsb = function() {
+String.prototype.trimSufBlank = function() {
 	return this.replace(/(\s*$)/g, "");
 };
 /**
  * 去掉字符串中所有的character
  * 
- * @param character
- *            字符
- * @param caseSensitive
- *            区分大小写
- * @method trimall
+ * @param{String/Number} character 字符
+ * @param{Boolean} caseSensitive [optional,default=false] 是否区分大小写
+ * @method trimChars
  * @returns{String}
  */
-String.prototype.trimall = function(character, caseSensitive) {
-	if (character === '')
+String.prototype.trimChars = function(character, caseSensitive) {
+	if (character === '') {
 		character = ' ';
+	}
 	var i = 'i';
 	if (caseSensitive) {
 		i = '';
@@ -86,82 +124,56 @@ String.prototype.trimall = function(character, caseSensitive) {
 /**
  * 去掉字符串最后面的','end//[逗号Comma]
  * 
- * @method trimc
+ * @method trimCom
  * @returns{String}
  */
-String.prototype.trimc = function() {
+String.prototype.trimCom = function() {
 	return this.replace(/(\,$)/g, "");
-};
-/**
- * 去掉字符串最后面的';'end//[分号Comma]
- * 
- * @method trimsem
- * @returns{String}
- */
-String.prototype.trimsem = function() {
-	return this.replace(/(\;$)/g, "");
 };
 /**
  * 去掉字符串中前面的'0'
  * 
- * @method trimz
+ * @method trimZero
  * @returns{String}
  */
-String.prototype.trimz = function() {
+String.prototype.trimPreZero = function() {
 	return this.replace(/(^0*)/g, "");
 };
-/**
- * 清除前面和后面的换行符
- * 
- * @method trimlines
- * @returns{String}
- */
-String.prototype.trimlines = function() {
-	return this.replace(/(^\n+)|(\n+$)/g, "");
-};
-/**
- * 清除前面和后面的()
- * 
- * @method trimbracket
- * @returns{String}
- */
-String.prototype.trimbracket = function() {
-	return this.replace(/(^\()|(\)$)/g, "");
-};
+
 /**
  * 计算字符串的长度（一个双字节字符按UTF-8长度计3(aaa)，ASCII字符计1）
  * 
- * @method sizeutf8
+ * @method sizeUTF8
  * @returns{String}
  */
-String.prototype.sizeutf8 = function() {
+String.prototype.sizeUTF8 = function() {
 	return this.replace(/[^\x00-\xff]/g, "aaa").length;
 };
 /**
  * 计算字符串的长度（一个双字节字符按DWORD长度计2(aa)，ASCII字符计1）
  * 
- * @method sizedw
+ * @method sizeDW
  * @returns{String}
  */
-String.prototype.sizedw = function() {
+String.prototype.sizeDW = function() {
 	return this.replace(/[^\x00-\xff]/g, "aa").length;
 };
 /**
- * 将NULl转换为空字符
+ * 清除前面和后面的换行符
  * 
- * @method null2Empty
+ * @method trimLines
  * @returns{String}
  */
-String.prototype.null2empty = function() {
-	return this === null ? "" : this;
+String.prototype.trimLines = function() {
+	return this.replace(/(^\n+)|(\n+$)/g, "");
 };
 /**
  * 将多个换行替换为一个
  * 
- * @method rowspan
+ * @method rowSpan
  * @returns{String}
  */
-String.prototype.rowspan = function() {
+String.prototype.rowSpan = function() {
 	return this.replace(/(\n+)/g, "\n");
 };
 /**
@@ -178,14 +190,15 @@ String.prototype.lf2crlf = function() {
  * 格式化字符串,将{n},替换为对应的参数，如：'I {0}&{1} China.'.formatArgs('love','like'); 输出："I
  * love&like China."
  * 
- * @method fillArgs
+ * @method formatArgs
+ * @param{String/Number} arguments
  * @returns{String}
  */
 String.prototype.formatArgs = function() {
-	var formated = this;
+	var thiz = this;
 	for ( var i = 0; i < arguments.length; i++) {
 		var param = "\{" + i + "\}";
-		formated = formated.replace(param, arguments[i]);
+		thiz = thiz.replace(param, arguments[i]);
 	}
-	return formated;
+	return thiz;
 };

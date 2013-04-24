@@ -1,5 +1,5 @@
 /**
- * iTsai WebTools(Web开发工具集)
+ * iTsai WebTools(Web开发工具集)<br>
  * 
  * @author Chihpeng Tsai(470597142@qq.com)
  */
@@ -9,13 +9,30 @@
 		iTsai = {};
 })();
 
+/**
+ * iTsai为入口顶层对象
+ * 
+ * @namespace iTsai
+ */
 iTsai = {
-	version : '0.2.0',
+	/**
+	 * iTsai库版本
+	 */
+	version : '0.2.8',
+	/**
+	 * 显示当前对象名称路径
+	 * 
+	 * @method toString
+	 * @return{String} 'iTsai'
+	 */
 	toString : function() {
 		return 'iTsai';
 	},
 	/**
 	 * 生成唯一CID编号:时间+4位随机数
+	 * 
+	 * @method random
+	 * @return{String} 随机数
 	 */
 	random : function() {
 		return new Date().getTime() + '' + Math.round(Math.random() * 10000);
@@ -23,20 +40,25 @@ iTsai = {
 	/**
 	 * 判断是否含有'.'号
 	 * 
-	 * @param string
-	 * @returns {Boolean}
+	 * @method hasDot
+	 * @param{String} str 输入字符串
+	 * @returns{Boolean}
 	 */
-	hasDot : function(string) {
-		if (string.indexOf('.') != -1) {
+	hasDot : function(str) {
+		if (typeof str != 'string') {
+			return false;
+		}
+		if (str.indexOf('.') != -1) {
 			return true;
 		}
 		return false;
 	},
 	/**
-	 * 011=9(011 表示8进制)
+	 * 判断对象是否为纯整形数字或整形数字字符串 011=9(011 表示8进制)
 	 * 
-	 * @param{Object} obj
-	 * @returns {Boolean}
+	 * @method isInteger
+	 * @param{Number/String} obj 输入数字或字符串
+	 * @returns{Boolean}
 	 */
 	isInteger : function(obj) {
 		if (obj != parseInt(obj, 10)) {
@@ -44,30 +66,43 @@ iTsai = {
 		}
 		return true;
 	},
-	null2Empty : function(obj) {
-		if (obj == 0) {
-			return obj;
+	/**
+	 * 将"undefined"和null转换为空串
+	 * 
+	 * @method obj2Empty
+	 * @param{Object} obj 输入对象
+	 * @return{Object}
+	 */
+	obj2Empty : function(obj) {
+		if (typeof obj == "undefined" || obj == null) {
+			return '';
 		}
-		return (!obj ? '' : obj);
+		return obj;
 	},
 	/**
 	 * 检测插件是否存在,如:'Quicktime'/'Quicktime.Quicktime'<br>
 	 * IE浏览器控件的名称通道和其它浏览器插件名称不一致
 	 * 
-	 * @param name
-	 *            插件名称
-	 * @param nameIE
-	 *            IE浏览器ActiveX插件名称
-	 * @returns {Boolean}
+	 * @method checkPlugin
+	 * @param{String} name 插件名称
+	 * @param{String} nameIE [optional,default=name] IE浏览器ActiveX插件名称
+	 * @return{Boolean} true-插件已经安装;false-未安装
 	 */
 	checkPlugin : function(name, nameIE) {
-		return this.hasPluginIE(nameIE) || this.hasPlugin(name);
+		var ie = '';
+		if (typeof nameIE === 'undefined') {
+			ie = name;
+		} else {
+			ie = nameIE;
+		}
+		return this.hasPluginIE(ie) || this.hasPlugin(name);
 	},
 	/**
 	 * 检测非IE浏览器插件是否存在
 	 * 
+	 * @method hasPlugin
 	 * @param{String} name 插件名称
-	 * @returns {Boolean}
+	 * @return{Boolean} true-插件已经安装;false-未安装
 	 */
 	hasPlugin : function(name) {
 		if (!name)
@@ -84,8 +119,9 @@ iTsai = {
 	/**
 	 * 检测IE浏览器插件是否存在
 	 * 
+	 * @method hasPluginIE
 	 * @param{String} name IE浏览器ActiveX插件名称
-	 * @returns {Boolean}
+	 * @return{Boolean} true-插件已经安装;false-未安装
 	 */
 	hasPluginIE : function(name) {
 		if (!name)
@@ -98,7 +134,11 @@ iTsai = {
 		}
 	},
 	/**
-	 * 颜色取反
+	 * 颜色取反，如将白色'#ffffff'转换为黑色'#000000'
+	 * 
+	 * @method colorInverse
+	 * @param{String} color 颜色16进制字符表示形式，如：'#ff0000'，表示红色。
+	 * @return{String} 取反后的颜色
 	 */
 	colorInverse : function(color) {
 		color = !color ? '' : color;
@@ -108,7 +148,10 @@ iTsai = {
 		return clr == '#0' ? '#000000' : clr;
 	},
 	/**
-	 * 获取语言代码,如:'zh-CN'
+	 * 获取浏览器语言代码,如:'zh-CN'
+	 * 
+	 * @method getLang
+	 * @return{String} 语言代码
 	 */
 	getLang : function() {
 		var nav = window.navigator;
@@ -117,7 +160,8 @@ iTsai = {
 	/**
 	 * 取消事件冒泡
 	 * 
-	 * @param e
+	 * @method stopBubble
+	 * @param{Object} e 事件对象
 	 */
 	stopBubble : function(e) {
 		if (e && e.stopPropagation) {
@@ -130,10 +174,11 @@ iTsai = {
 	/**
 	 * 阻止浏览器默认行为
 	 * 
-	 * @param e
-	 * @returns {Boolean}
+	 * @method stopDefault
+	 * @param{Object} e 事件对象
+	 * @return{Boolean}
 	 */
-	stopDefault : function(e) {
+	preventDefault : function(e) {
 		if (e && e.preventDefault) {
 			e.preventDefault();
 		} else {
@@ -141,27 +186,5 @@ iTsai = {
 			window.event.returnValue = false;
 		}
 		return false;
-	},
-	printDocInfo : function() {
-		var s = "";
-		s += " 网页可见区域宽：" + document.body.clientWidth + "\n";
-		s += " 网页可见区域高：" + document.body.clientHeight + "\n";
-		s += " 网页可见区域宽：" + document.body.offsetWidth + " (包括边线和滚动条的宽)" + "\n";
-		s += " 网页可见区域高：" + document.body.offsetHeight + " (包括边线的宽)" + "\n";
-		s += " 网页正文全文宽：" + document.body.scrollWidth + "\n";
-		s += " 网页正文全文高：" + document.body.scrollHeight + "\n";
-		s += " 网页被卷去的高(ff)：" + document.body.scrollTop + "\n";
-		s += " 网页被卷去的高(ie)：" + document.documentElement.scrollTop + "\n";
-		s += " 网页被卷去的左：" + document.body.scrollLeft + "\n";
-		s += " 网页正文部分上：" + window.screenTop + "\n";
-		s += " 网页正文部分左：" + window.screenLeft + "\n";
-		s += " 屏幕分辨率的高：" + window.screen.height + "\n";
-		s += " 屏幕分辨率的宽：" + window.screen.width + "\n";
-		s += " 屏幕可用工作区高度：" + window.screen.availHeight + "\n";
-		s += " 屏幕可用工作区宽度：" + window.screen.availWidth + "\n";
-		s += " 你的屏幕设置是 " + window.screen.colorDepth + " 位彩色" + "\n";
-		s += " 你的屏幕设置 " + window.screen.deviceXDPI + " 像素/英寸" + "\n";
-		s += " window的页面可视部分实际高度(ff) " + window.innerHeight + "\n";
-		return s;
 	}
 };

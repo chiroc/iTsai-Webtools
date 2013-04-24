@@ -1,25 +1,27 @@
-/**
- * iTsai WebTools(Web开发工具集)
- * 
- * @author Chihpeng Tsai(470597142@qq.com)
- * @description 页面导航工具等.
- */
-
 (function() {
 	if (!window.iTsai)
 		iTsai = {};
 })();
-
+/**
+ * @namespace iTsai.nav
+ */
 iTsai.nav = {
+	/**
+	 * 显示当前对象名称路径
+	 * 
+	 * @method toString
+	 * @return{String} 'iTsai.nav'
+	 */
 	toString : function() {
 		return 'iTsai.nav';
 	},
 	/**
-	 * 获取URL地址栏参数
+	 * 获取URL地址栏参数值
 	 * 
+	 * @method getParameter
 	 * @param{String} name 参数名
-	 * @prarm{String} url URL地址默认为当前URL
-	 * @returns
+	 * @param{String} url [optional,default=当前URL]URL地址
+	 * @return{String} 参数值
 	 */
 	getParameter : function(name, url) {
 		var paramStr = url || window.location.search;
@@ -46,7 +48,10 @@ iTsai.nav = {
 		return null;
 	},
 	/**
-	 * 转到上一页[缓存页]
+	 * 转到上一页（缓存页）
+	 * 
+	 * @method goPrevPage
+	 * @return iTsai.nav
 	 */
 	goPrevPage : function() {
 		history.go(-1);
@@ -54,6 +59,9 @@ iTsai.nav = {
 	},
 	/**
 	 * 转到下一页
+	 * 
+	 * @method goNextPage
+	 * @return iTsai.nav
 	 */
 	goNextPage : function() {
 		history.go(1);
@@ -61,6 +69,9 @@ iTsai.nav = {
 	},
 	/**
 	 * 转到当前页(刷新页面)
+	 * 
+	 * @method refreshPage
+	 * @return iTsai.nav
 	 */
 	refreshPage : function() {
 		history.go(0);
@@ -69,10 +80,12 @@ iTsai.nav = {
 	/**
 	 * 设置主页
 	 * 
-	 * @param url
-	 * @returns {___anonymous186_2244}
+	 * @method setHomepage
+	 * @param{String} url 设置的URL
+	 * @return iTsai.nav
 	 */
 	setHomepage : function(url) {
+		url = (url ? url : location.href);
 		if (document.all) {
 			document.body.style.behavior = 'url(#default#homepage)';
 			document.body.setHomePage(url);
@@ -85,9 +98,13 @@ iTsai.nav = {
 					alert('此操作被浏览器拒绝！请在地址栏输入"about:config"并回车然后将[signed.applets.codebase_principal_support]的值设置为true');
 				}
 			}
-			var prefs = Components.classes['@mozilla.org/preferences-service;1']
-					.getService(Components.interfaces.nsIPrefBranch);
-			prefs.setCharPref('browser.startup.homepage', url);
+			try {
+				var prefs = Components.classes['@mozilla.org/preferences-service;1']
+						.getService(Components.interfaces.nsIPrefBranch);
+				prefs.setCharPref('browser.startup.homepage', url);
+			} catch (e) {
+				alert('设置失败');
+			}
 		} else {
 			alert('请用Ctrl+D将地址添加到收藏夹');
 		}
@@ -96,14 +113,17 @@ iTsai.nav = {
 	/**
 	 * 获取域名或主机IP
 	 * 
-	 * @returns
+	 * @method getHost
+	 * @return{String}
 	 */
 	getHost : function() {
 		return location.host.split(':')[0];
 	},
 	/**
 	 * Firefox需要手动开启dom.allow_scripts_to_close_windows<br>
-	 * about:config -> dom.allow_scripts_to_close_windows = true
+	 * about:config -> dom.allow_scripts_to_close_windows = true。
+	 * 
+	 * @method closeWin
 	 */
 	closeWin : function() {
 		window.opener = null;
@@ -174,6 +194,7 @@ iTsai.nav = {
 		};
 	}
 };
+
 /**
  * 在页面加载时初始化当前API中部分参数
  * 

@@ -11,6 +11,12 @@
 })();
 
 iTsai.regexp = {
+	/**
+	 * 显示当前对象名称路径
+	 * 
+	 * @method toString
+	 * @return{String} iTsai.regexp
+	 */
 	toString : function() {
 		return 'iTsai.regexp';
 	},
