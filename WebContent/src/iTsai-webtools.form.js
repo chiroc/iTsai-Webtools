@@ -1,7 +1,3 @@
-(function() {
-	if (!window.iTsai)
-		iTsai = {};
-})();
 
 /**
  * 表单处理工具

@@ -1,9 +1,4 @@
 
-(function() {
-	if (!window.iTsai)
-		iTsai = {};
-})();
-
 /**
  * 遮盖层工具，包括页面遮盖和元素遮盖等。
  * 

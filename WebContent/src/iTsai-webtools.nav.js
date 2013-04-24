@@ -1,7 +1,3 @@
-(function() {
-	if (!window.iTsai)
-		iTsai = {};
-})();
 /**
  * @namespace iTsai.nav
  */

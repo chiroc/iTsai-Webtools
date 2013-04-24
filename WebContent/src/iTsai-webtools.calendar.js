@@ -1,7 +1,3 @@
-(function() {
-	if (!window.iTsai)
-		iTsai = {};
-})();
 
 /**
  * 日期时间处理工具

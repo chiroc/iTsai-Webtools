@@ -1,9 +1,4 @@
 
-(function() {
-	if (!window.iTsai)
-		iTsai = {};
-})();
-
 /**
  * 判断数据中是否存在cell值，并返回第一个存在的位置
  * 

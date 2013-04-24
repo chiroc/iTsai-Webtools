@@ -1,15 +1,7 @@
 /**
- * iTsai WebTools(Web开发工具集)
- * 
- * @author Chihpeng Tsai(470597142@qq.com)
- * @description 常用正则表达式.
+ * 常用正则表达式
+ * @namespace iTsai.regexp
  */
-
-(function() {
-	if (!window.iTsai)
-		iTsai = {};
-})();
-
 iTsai.regexp = {
 	/**
 	 * 显示当前对象名称路径
