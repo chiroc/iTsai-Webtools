@@ -1,30 +1,38 @@
 /**
- * iTsai WebTools(Web开发工具集)<br>
- * 
+ * iTsai WebTools(Web开发工具集)
+ *  当前库依赖第三方库：
+ *  1).jQuery（v1.7.x）。详细了解：http://jquery.com/
+ *  2).json2.js库。如果浏览器支持JSON.stringify和JSON.parse接口就不需要此库，详细了解：http://www.json.org/
+ *  当前库实现的基本功能：
+ *  1).ajax: 异步数据请求封装；
+ *  2).array:
  * @author Chihpeng Tsai(470597142@qq.com)
+ * git: https://github.com/iiTsai
+ * osc: http://my.oschina.net/tsai
+ * @method ()
  */
-
 (function() {
-	if (!window.iTsai)
-		iTsai = {};
+	if (!window.iTsai){
+        window.iTsai = {};
+    }
 })();
 
-
 /**
- * iTsai为入口顶层对象
- * 
- * @namespace iTsai
+ * iTsai为顶层入口对象
+ * @module iTsai
  */
 iTsai = {
 	/**
 	 * iTsai库版本
+     * @type {String}
+     * @property version
 	 */
-	version : '0.2.8',
+	version : '0.2.9',
 	/**
 	 * 显示当前对象名称路径
 	 * 
 	 * @method toString
-	 * @return{String} 'iTsai'
+	 * @return {String} 'iTsai'
 	 */
 	toString : function() {
 		return 'iTsai';
@@ -33,7 +41,7 @@ iTsai = {
 	 * 生成唯一CID编号:时间+4位随机数
 	 * 
 	 * @method random
-	 * @return{String} 随机数
+	 * @return {String} 随机数
 	 */
 	random : function() {
 		return new Date().getTime() + '' + Math.round(Math.random() * 10000);
@@ -42,8 +50,8 @@ iTsai = {
 	 * 判断是否含有'.'号
 	 * 
 	 * @method hasDot
-	 * @param{String} str 输入字符串
-	 * @returns{Boolean}
+	 * @param {String} str 输入字符串
+	 * @return {Boolean}
 	 */
 	hasDot : function(str) {
 		if (typeof str != 'string') {
@@ -58,8 +66,8 @@ iTsai = {
 	 * 判断对象是否为纯整形数字或整形数字字符串 011=9(011 表示8进制)
 	 * 
 	 * @method isInteger
-	 * @param{Number/String} obj 输入数字或字符串
-	 * @returns{Boolean}
+	 * @param {Number/String} obj 输入数字或字符串
+	 * @return {Boolean}
 	 */
 	isInteger : function(obj) {
 		if (obj != parseInt(obj, 10)) {
@@ -71,8 +79,8 @@ iTsai = {
 	 * 将"undefined"和null转换为空串
 	 * 
 	 * @method obj2Empty
-	 * @param{Object} obj 输入对象
-	 * @return{Object}
+	 * @param {Object} obj 输入对象
+	 * @return {Object}
 	 */
 	obj2Empty : function(obj) {
 		if (typeof obj == "undefined" || obj == null) {
@@ -85,9 +93,9 @@ iTsai = {
 	 * IE浏览器控件的名称通道和其它浏览器插件名称不一致
 	 * 
 	 * @method checkPlugin
-	 * @param{String} name 插件名称
-	 * @param{String} nameIE [optional,default=name] IE浏览器ActiveX插件名称
-	 * @return{Boolean} true-插件已经安装;false-未安装
+	 * @param {String} name 插件名称
+	 * @param {String} nameIE [optional,default=name] IE浏览器ActiveX插件名称
+	 * @return {Boolean} true-插件已经安装;false-未安装
 	 */
 	checkPlugin : function(name, nameIE) {
 		var ie = '';
@@ -102,8 +110,8 @@ iTsai = {
 	 * 检测非IE浏览器插件是否存在
 	 * 
 	 * @method hasPlugin
-	 * @param{String} name 插件名称
-	 * @return{Boolean} true-插件已经安装;false-未安装
+	 * @param {String} name 插件名称
+	 * @return {Boolean} true-插件已经安装;false-未安装
 	 */
 	hasPlugin : function(name) {
 		if (!name)
@@ -121,8 +129,8 @@ iTsai = {
 	 * 检测IE浏览器插件是否存在
 	 * 
 	 * @method hasPluginIE
-	 * @param{String} name IE浏览器ActiveX插件名称
-	 * @return{Boolean} true-插件已经安装;false-未安装
+	 * @param {String} name IE浏览器ActiveX插件名称
+	 * @return {Boolean} true-插件已经安装;false-未安装
 	 */
 	hasPluginIE : function(name) {
 		if (!name)
@@ -138,8 +146,8 @@ iTsai = {
 	 * 颜色取反，如将白色'#ffffff'转换为黑色'#000000'
 	 * 
 	 * @method colorInverse
-	 * @param{String} color 颜色16进制字符表示形式，如：'#ff0000'，表示红色。
-	 * @return{String} 取反后的颜色
+	 * @param {String} color 颜色16进制字符表示形式，如：'#ff0000'，表示红色。
+	 * @return {String} 取反后的颜色
 	 */
 	colorInverse : function(color) {
 		color = !color ? '' : color;
@@ -152,7 +160,7 @@ iTsai = {
 	 * 获取浏览器语言代码,如:'zh-CN'
 	 * 
 	 * @method getLang
-	 * @return{String} 语言代码
+	 * @return {String} 语言代码
 	 */
 	getLang : function() {
 		var nav = window.navigator;
@@ -162,7 +170,7 @@ iTsai = {
 	 * 取消事件冒泡
 	 * 
 	 * @method stopBubble
-	 * @param{Object} e 事件对象
+	 * @param {Object} e 事件对象
 	 */
 	stopBubble : function(e) {
 		if (e && e.stopPropagation) {
@@ -176,8 +184,8 @@ iTsai = {
 	 * 阻止浏览器默认行为
 	 * 
 	 * @method stopDefault
-	 * @param{Object} e 事件对象
-	 * @return{Boolean}
+	 * @param {Object} e 事件对象
+	 * @return {Boolean}
 	 */
 	preventDefault : function(e) {
 		if (e && e.preventDefault) {

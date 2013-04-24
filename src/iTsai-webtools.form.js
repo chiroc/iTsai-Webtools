@@ -1,15 +1,16 @@
 
 /**
  * 表单处理工具
- * 
- * @namespace iTsai.form
+ *
+ * @namespace iTsai
+ * @class form
  */
 iTsai.form = {
 	/**
 	 * 显示当前对象名称路径。
 	 * 
 	 * @method toString
-	 * @return{String} 'iTsai.form'
+	 * @return {String} 'iTsai.form'
 	 */
 	toString : function() {
 		return 'iTsai.form';
@@ -18,8 +19,7 @@ iTsai.form = {
 	 * 常用键盘码对象。
 	 * 
 	 * @type {Object}
-	 * @namespace iTsai
-	 * @module iTsai.form.keycode
+	 * @namespace iTsai.form
 	 * @class keycode
 	 */
 	keycode : {
@@ -105,9 +105,9 @@ iTsai.form = {
 	 * 绑定键盘事件到元素，当焦点在元素上并触发键盘事件时响应该函数。
 	 * 
 	 * @method _bindKey
-	 * @param{Object} element 被绑定元素的jQuery对象
-	 * @param{Number} iTsai.form.keycode 键盘码
-	 * @param{Function} callback 回调函数，参数为绑定的元素对象element和事件e
+	 * @param {Object} element 被绑定元素的jQuery对象
+	 * @param {Number} iTsai.form.keycode 键盘码
+	 * @param {Function} callback 回调函数，参数为绑定的元素对象element和事件e
 	 */
 	_bindKey : function(element, keycode, callback) {
 		element.keydown(function(e) {
@@ -122,9 +122,9 @@ iTsai.form = {
 	 * 实际处理中应该将提交按键(type="submit")放在element区域外,避免重复提交。
 	 * 
 	 * @method bindEnterKey
-	 * @param{Object} element 被绑定元素的jQuery对象
-	 * @param{Function} callback 回调函数，参数为绑定的元素对象element和事件e
-	 * @return{Object} iTsai.form
+	 * @param {Object} element 被绑定元素的jQuery对象
+	 * @param {Function} callback 回调函数，参数为绑定的元素对象element和事件e
+	 * @return {Object} iTsai.form
 	 */
 	bindEnterKey : function(element, callback) {
 		this._bindKey(this.keycode.ENTER, element, callback);
@@ -134,9 +134,9 @@ iTsai.form = {
 	 * 在element区域内响应Esc键盘事件。
 	 * 
 	 * @method bindEscKey
-	 * @param{Object} element 被绑定元素的jQuery对象
-	 * @param{Function} callback 回调函数，参数为绑定的元素对象element和事件e
-	 * @return{Object} iTsai.form
+	 * @param {Object} element 被绑定元素的jQuery对象
+	 * @param {Function} callback 回调函数，参数为绑定的元素对象element和事件e
+	 * @return {Object} iTsai.form
 	 */
 	bindEscKey : function(element, callback) {
 		this._bindKey(this.keycode.ESC, element, callback);
@@ -146,9 +146,9 @@ iTsai.form = {
 	 * 在element区域内响应F11键盘事件。
 	 * 
 	 * @method bindF11Key
-	 * @param{Object} element 被绑定元素的jQuery对象
-	 * @param{Function} callback 回调函数，参数为绑定的元素对象element和事件e
-	 * @return{Object} iTsai.form
+	 * @param {Object} element 被绑定元素的jQuery对象
+	 * @param {Function} callback 回调函数，参数为绑定的元素对象element和事件e
+	 * @return {Object} iTsai.form
 	 */
 	bindF11Key : function(element, callback) {
 		this._bindKey(this.keycode.F11, element, callback);
@@ -158,9 +158,9 @@ iTsai.form = {
 	 * 在element区域内响应Page Down键盘事件。
 	 * 
 	 * @method bindPageDownKey
-	 * @param{Object} element 被绑定元素的jQuery对象
-	 * @param{Function} callback 回调函数，参数为绑定的元素对象element和事件e
-	 * @return{Object} iTsai.form
+	 * @param {Object} element 被绑定元素的jQuery对象
+	 * @param {Function} callback 回调函数，参数为绑定的元素对象element和事件e
+	 * @return {Object} iTsai.form
 	 */
 	bindPageDownKey : function(element, callback) {
 		this._bindKey(this.keycode.PAGEDOWN, element, callback);
@@ -170,9 +170,9 @@ iTsai.form = {
 	 * 在element区域内响应Page Up键盘事件。
 	 * 
 	 * @method bindPageUpKey
-	 * @param{Object} element 被绑定元素的jQuery对象
-	 * @param{Function} callback 回调函数，参数为绑定的元素对象element和事件e
-	 * @return{Object} iTsai.form
+	 * @param {Object} element 被绑定元素的jQuery对象
+	 * @param {Function} callback 回调函数，参数为绑定的元素对象element和事件e
+	 * @return {Object} iTsai.form
 	 */
 	bindPageUpKey : function(element, callback) {
 		this._bindKey(this.keycode.PAGEUP, element, callback);
@@ -182,9 +182,9 @@ iTsai.form = {
 	 * 在element区域内响应Left键盘事件。
 	 * 
 	 * @method bindLeftKey
-	 * @param{Object} element 被绑定元素的jQuery对象
-	 * @param{Function} callback 回调函数，参数为绑定的元素对象element和事件e
-	 * @return{Object} iTsai.form
+	 * @param {Object} element 被绑定元素的jQuery对象
+	 * @param {Function} callback 回调函数，参数为绑定的元素对象element和事件e
+	 * @return {Object} iTsai.form
 	 */
 	bindLeftKey : function(element, callback) {
 		this._bindKey(this.keycode.LEFT, element, callback);
@@ -194,9 +194,9 @@ iTsai.form = {
 	 * 在element区域内响应Right键盘事件。
 	 * 
 	 * @method bindRightKey
-	 * @param{Object} element 被绑定元素的jQuery对象
-	 * @param{Function} callback 回调函数，参数为绑定的元素对象element和事件e
-	 * @return{Object} iTsai.form
+	 * @param {Object} element 被绑定元素的jQuery对象
+	 * @param {Function} callback 回调函数，参数为绑定的元素对象element和事件e
+	 * @return {Object} iTsai.form
 	 */
 	bindRightKey : function(element, callback) {
 		this._bindKey(this.keycode.RIGHT, element, callback);
@@ -206,9 +206,9 @@ iTsai.form = {
 	 * 在element区域内响应Up键盘事件。
 	 * 
 	 * @method bindUpKey
-	 * @param{Object} element 被绑定元素的jQuery对象
-	 * @param{Function} callback 回调函数，参数为绑定的元素对象element和事件e
-	 * @return{Object} iTsai.form
+	 * @param {Object} element 被绑定元素的jQuery对象
+	 * @param {Function} callback 回调函数，参数为绑定的元素对象element和事件e
+	 * @return {Object} iTsai.form
 	 */
 	bindUpKey : function(element, callback) {
 		this._bindKey(this.keycode.UP, element, callback);
@@ -218,9 +218,9 @@ iTsai.form = {
 	 * 在element区域内响应Down键盘事件。
 	 * 
 	 * @method bindDownKey
-	 * @param{Object} element 被绑定元素的jQuery对象
-	 * @param{Function} callback 回调函数，参数为绑定的元素对象element和事件e
-	 * @return{Object} iTsai.form
+	 * @param {Object} element 被绑定元素的jQuery对象
+	 * @param {Function} callback 回调函数，参数为绑定的元素对象element和事件e
+	 * @return {Object} iTsai.form
 	 */
 	bindDownKey : function(element, callback) {
 		this._bindKey(this.keycode.DOWN, element, callback);
@@ -230,9 +230,9 @@ iTsai.form = {
 	 * 获取单选框值,如果有表单就在表单内查询,否则在全文查询
 	 * 
 	 * @method getRadioValue
-	 * @param{String}name radio名称
-	 * @param{Object} frm [optional,default=document] jQuery表单（或其它容器对象）对象
-	 * @return{Object} radio jQuery对象
+	 * @param {String}name radio名称
+	 * @param {Object} frm [optional,default=document] jQuery表单（或其它容器对象）对象
+	 * @return {Object} radio jQuery对象
 	 */
 	getRadioValue : function(name, frm) {
 		if (frm && frm.find)
@@ -243,10 +243,10 @@ iTsai.form = {
 	 * 设置单选框值,如果有表单就在表单内查询,否则在全文查询。
 	 * 
 	 * @method setRadioValue
-	 * @param{String} name radio名称
-	 * @param{String} value radio表单value值
-	 * @param{Object} frm [optional,default=document] jQuery表单（或其它容器对象）对象
-	 * @return{Object} radio jQuery对象
+	 * @param {String} name radio名称
+	 * @param {String} value radio表单value值
+	 * @param {Object} frm [optional,default=document] jQuery表单（或其它容器对象）对象
+	 * @return {Object} radio jQuery对象
 	 */
 	setRadioValue : function(name, value, frm) {
 		if (frm && frm.find)
@@ -260,10 +260,10 @@ iTsai.form = {
 	 * 设置select下拉框的值
 	 * 
 	 * @method setRadioValue
-	 * @param{String} selectId 下拉框id号
-	 * @param{String/Number} value select表单value值
-	 * @param{Object} frm [optional,default=document] jQuery表单（或其它容器对象）对象
-	 * @return{Object} select jQuery对象
+	 * @param {String} selectId 下拉框id号
+	 * @param {String/Number} value select表单value值
+	 * @param {Object} frm [optional,default=document] jQuery表单（或其它容器对象）对象
+	 * @return {Object} select jQuery对象
 	 */
 	setSelectValue : function(selectId, value, frm) {
 		if (frm && frm.find)
@@ -276,8 +276,8 @@ iTsai.form = {
 	 * 将object转换为select的列表模式，key为option的value，值为option的文本。
 	 * 
 	 * @method object2Options
-	 * @param{Object}objects key-map对象
-	 * @returns{String} html
+	 * @param {Object}objects key-map对象
+	 * @return {String} html
 	 */
 	object2Options : function(objects) {
 		if (!$.isPlainObject(objects)) {
@@ -293,9 +293,9 @@ iTsai.form = {
 	 * 禁用/启用输入控件。
 	 * 
 	 * @method formDisable
-	 * @param{Object} frmObj iQuery表单对象（或其它任何包装容器，如：div）
-	 * @param{Boolean} disabled true-禁用;false-启用
-	 * @return{Object} iTsai.form
+	 * @param {Object} frmObj iQuery表单对象（或其它任何包装容器，如：div）
+	 * @param {Boolean} disabled true-禁用;false-启用
+	 * @return {Object} iTsai.form
 	 */
 	formDisable : function(frmObj, disabled) {
 		if ($.isPlainObject(frmObj)) {
@@ -307,8 +307,8 @@ iTsai.form = {
 	 * 将输入控件集合序列化成对象， 名称或编号作为键，value属性作为值。
 	 * 
 	 * @method _serializeInputs
-	 * @param{Array} inputs input/select/textarea的对象集合
-	 * @return{Object} json 对象 {key:value,...}
+	 * @param {Array} inputs input/select/textarea的对象集合
+	 * @return {Object} json 对象 {key:value,...}
 	 */
 	_serializeInputs : function(inputs) {
 		var json = {};
@@ -364,9 +364,9 @@ iTsai.form = {
 	 * 将值填充到输入标签里面。
 	 * 
 	 * @method _deserializeInputs
-	 * @param{Array} inputs 输入标签集合
-	 * @param{String/Number} value 值
-	 * @return{Object} iTsai.form
+	 * @param {Array} inputs 输入标签集合
+	 * @param {String/Number} value 值
+	 * @return {Object} iTsai.form
 	 */
 	_deserializeInputs : function(inputs, value) {
 		if (!inputs && value == null) {
@@ -417,8 +417,8 @@ iTsai.form = {
 	 * 在分组中查找 fieldset (如：fieldset="user")开头的数据域。
 	 * 
 	 * @method _serializeGroups
-	 * @param{Array} groups 输入框分组容器集合
-	 * @return{Object} json 对象 {key:value,...}
+	 * @param {Array} groups 输入框分组容器集合
+	 * @return {Object} json 对象 {key:value,...}
 	 */
 	_serializeGroups : function(groups) {
 		var json = {};
@@ -451,8 +451,8 @@ iTsai.form = {
 	 * 而'button','reset','submit','image'会被过虑掉。
 	 * 
 	 * @method serialize
-	 * @param{Object} frm jQuery表单对象
-	 * @return{Object} json对象，最多包含两层结构
+	 * @param {Object} frm jQuery表单对象
+	 * @return {Object} json对象，最多包含两层结构
 	 */
 	serialize : function(frm) {
 		var json = {};
@@ -474,9 +474,9 @@ iTsai.form = {
 	 * 填充表单内容：将json数据形式数据填充到表单内，只解析单层json结构。
 	 * 
 	 * @method deserializeSimple
-	 * @param{Object} frm jQuery表单对象（或其它容器标签对象，如：div）
-	 * @param{Object} json 序列化好的json数据对象，最多只包含两层嵌套
-	 * @return{Object} iTsai.form
+	 * @param {Object} frm jQuery表单对象（或其它容器标签对象，如：div）
+	 * @param {Object} json 序列化好的json数据对象，最多只包含两层嵌套
+	 * @return {Object} iTsai.form
 	 */
 	deserializeSimple : function(frm, json) {
 		frm = frm || $('body');
@@ -495,8 +495,8 @@ iTsai.form = {
 	 * 获取合法的输入标签。
 	 * 
 	 * @method _filterInputs
-	 * @param{Object} container jQuery对象，标签容器
-	 * @return{Array} inputs jQuery对象数组
+	 * @param {Object} container jQuery对象，标签容器
+	 * @return {Array} inputs jQuery对象数组
 	 */
 	_filterInputs : function(container) {
 		return $(container
@@ -506,9 +506,9 @@ iTsai.form = {
 	 * 查找符合条件的输入标签。
 	 * 
 	 * @method _findInputs
-	 * @param{Array} inputs jQueery输入标签数组
-	 * @param{String} key 查询关键字
-	 * @returns{Array} inputs jQuery对象数组
+	 * @param {Array} inputs jQueery输入标签数组
+	 * @param {String} key 查询关键字
+	 * @return {Array} inputs jQuery对象数组
 	 */
 	_findInputs : function(inputs, key) {
 		return $(inputs.filter('input[name=' + key + '],input[id=' + key
@@ -519,9 +519,9 @@ iTsai.form = {
 	 * 填充表单内容：将json数据形式数据填充到表单内，最多解析两层json结构。
 	 * 
 	 * @method deserialize
-	 * @param{Object} frm jQuery表单对象（或其它容器标签对象，如：div）
-	 * @param{Object} json 序列化好的json数据对象，最多只包含两层嵌套
-	 * @return{Object} iTsai.form
+	 * @param {Object} frm jQuery表单对象（或其它容器标签对象，如：div）
+	 * @param {Object} json 序列化好的json数据对象，最多只包含两层嵌套
+	 * @return {Object} iTsai.form
 	 */
 	deserialize : function(frm, json) {
 		frm = frm || $('body');

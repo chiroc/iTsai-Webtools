@@ -1,30 +1,32 @@
 
 /**
- * @namespace iTsai.ajax
+ *  通过 HTTP 请求加载远程数据，底层依赖jQuery的AJAX实现。当前接口实现了对jQuery AJAX接口的进一步封装。
+ * @namespace iTsai
+ * @class ajax
  */
 iTsai.ajax = {
 	/**
 	 * 显示当前对象名称路径
 	 * 
 	 * @method toString
-	 * @return{String} 'iTsai.ajax'
+	 * @return {String} 'iTsai.ajax'
 	 */
 	toString : function() {
 		return 'iTsai.ajax';
 	},
 	/**
-	 * 初始化Request对象请求参数
+	 * 初始化全局Request对象请求参数，包括：请求URL，超时，成功返回码。
 	 * 
 	 * @method setup
-	 * @param{Object} s 配置对象，数据格式：{ url:'/', timeout:10000, sucCode : 200 }
-	 * @return{Object} iTsai.ajax
+	 * @param {Object} s 配置对象，数据格式：{ url:'/', timeout:10000, sucCode : 200 }
+	 * @return {Object} iTsai.ajax
 	 */
 	setup : function(s) {
 		if ($.isPlainObject(s)) {
 			var thiz = iTsai.ajax;
 			thiz.REQ_URL = s.url ? s.url : '/';
 			thiz.TIME_OUT = s.timeout ? s.timeout : 10000;
-			thiz.REQ_CODE.SUCC = s.sucCode ? s.sucCode : 200;
+			thiz.reqCode.SUCC = s.sucCode ? s.sucCode : 200;
 			thiz.SHOW_SUCC_INFO = s.sucInfo ? true : false;
 		}
 		return this;
@@ -34,10 +36,9 @@ iTsai.ajax = {
 	 * 
 	 * @type {Object}
 	 * @namespace iTsai.ajax
-	 * @module iTsai.ajax.REQ_CODE
-	 * @class REQ_CODE
+	 * @class reqCode
 	 */
-	REQ_CODE : {
+	reqCode : {
 		/**
 		 * 成功返回码200
 		 * 
@@ -51,10 +52,9 @@ iTsai.ajax = {
 	 * 
 	 * @type {Object}
 	 * @namespace iTsai.ajax
-	 * @module iTsai.ajax.ACTIOIN
-	 * @class ACTION
+	 * @class action
 	 */
-	ACTION : {
+	action : {
 		/**
 		 * 创建
 		 * 
@@ -85,7 +85,7 @@ iTsai.ajax = {
 		D : 'd'
 	},
 	/**
-	 * HTTP(POST/GET)请求相对地址
+	 * HTTP(POST/GET)请求地址
 	 * 
 	 * @type {String}
 	 * @property REQ_URL
@@ -109,44 +109,68 @@ iTsai.ajax = {
 	 * POST请求
 	 * 
 	 * @method post
-	 * @param{Object} cmd json对象参数
-	 * @param{Function} callback [optional,default=undefined] POST请求成功回调函数
-	 * @param{Boolean} sync [optional,default=false] 是否为同步请求:false-异步;true-同步。
+	 * @param {Object} cmd json对象参数
+	 * @param {Function} callback [optional,default=undefined] POST请求成功回调函数
+	 * @param {Boolean} sync [optional,default=false] 是否为同步请求:false-异步;true-同步。
 	 */
 	post : function(cmd, callback, sync) {
 		this.ajax('POST', cmd, callback, sync);
 	},
+    /**
+     * postC是对iTsai.ajax.post的封装,为创建请求:iTsai.ajax.action.C
+     *
+     * @method postC
+     * @param {Object} cmd json对象参数
+     * @param {Function} callback [optional,default=undefined] POST请求成功回调函数
+     * @param {Boolean} sync [optional,default=false] 是否为同步请求:false-异步;true-同步。
+     */
+    postC : function(cmd, callback, sync) {
+        cmd.action = this.action.C;
+        this.ajax('POST', cmd, callback, sync);
+    },
 	/**
-	 * postR是对iTsai.ajax.post的封装,为读请求:Posa.ACTION.R
+	 * postR是对iTsai.ajax.post的封装,为读请求:iTsai.ajax.action.R
 	 * 
 	 * @method postR
-	 * @param{Object} cmd json对象参数
-	 * @param{Function} callback [optional,default=undefined] POST请求成功回调函数
-	 * @param{Boolean} sync [optional,default=false] 是否为同步请求:false-异步;true-同步。
+	 * @param {Object} cmd json对象参数
+	 * @param {Function} callback [optional,default=undefined] POST请求成功回调函数
+	 * @param {Boolean} sync [optional,default=false] 是否为同步请求:false-异步;true-同步。
 	 */
 	postR : function(cmd, callback, sync) {
-		cmd.action = this.ACTION.R;
+		cmd.action = this.action.R;
 		this.ajax('POST', cmd, callback, sync);
 	},
 	/**
-	 * postU是对iTsai.ajax.post的封装,为更新请求:Posa.ACTION.U
+	 * postU是对iTsai.ajax.post的封装,为更新请求:iTsai.ajax.action.U
 	 * 
 	 * @method postU
-	 * @param{Object} cmd json对象参数
-	 * @param{Function} callback [optional,default=undefined] POST请求成功回调函数
-	 * @param{Boolean} sync [optional,default=false] 是否为同步请求:false-异步;true-同步。
+	 * @param {Object} cmd json对象参数
+	 * @param {Function} callback [optional,default=undefined] POST请求成功回调函数
+	 * @param {Boolean} sync [optional,default=false] 是否为同步请求:false-异步;true-同步。
 	 */
 	postU : function(cmd, callback, sync) {
-		cmd.action = this.ACTION.U;
+		cmd.action = this.action.U;
 		this.ajax('POST', cmd, callback, sync);
 	},
+    /**
+     * postD是对iTsai.ajax.post的封装,为读请求:iTsai.ajax.action.D
+     *
+     * @method postD
+     * @param {Object} cmd json对象参数
+     * @param {Function} callback [optional,default=undefined] POST请求成功回调函数
+     * @param {Boolean} sync [optional,default=false] 是否为同步请求:false-异步;true-同步。
+     */
+    postD : function(cmd, callback, sync) {
+        cmd.action = this.action.D;
+        this.ajax('POST', cmd, callback, sync);
+    },
 	/**
 	 * GET请求
 	 * 
 	 * @method get
-	 * @param{Object} cmd json对象参数
-	 * @param{Function} callback [optional,default=undefined] POST请求成功回调函数
-	 * @param{Boolean} sync [optional,default=false] 是否为同步请求:false-异步;true-同步。
+	 * @param {Object} cmd json对象参数
+	 * @param {Function} callback [optional,default=undefined] GET请求成功回调函数
+	 * @param {Boolean} sync [optional,default=false] 是否为同步请求:false-异步;true-同步。
 	 */
 	get : function(cmd, callback, sync) {
 		this.ajax('GET', cmd, callback, sync);
@@ -155,11 +179,11 @@ iTsai.ajax = {
 	 * ajax
 	 * 
 	 * @method ajax
-	 * @param{String} type POST/GET
-	 * @param{Object} cmd json参数命令和数据
-	 * @param{Function} callback [optional,default=undefined]
+	 * @param {String} type POST/GET
+	 * @param {Object} cmd json参数命令和数据
+	 * @param {Function} callback [optional,default=undefined]
 	 *                  请求成功回调函数,返回数据data和isSuc
-	 * @param{Boolean} sync [optional,default=false] 是否为同步请求:false-异步;true-同步。
+	 * @param {Boolean} sync [optional,default=false] 是否为同步请求:false-异步;true-同步。
 	 */
 	ajax : function(type, cmd, callback, sync) {
 		cmd = JSON.stringify(cmd);
@@ -199,13 +223,13 @@ iTsai.ajax = {
 	 * 打开请求返回代码和信息
 	 * 
 	 * @method printRegInfo
-	 * @param{Object} data 请求返回JSON数据
-	 * @return{Boolean} true-成功;false-失败
+	 * @param {Object} data 请求返回JSON数据
+	 * @return {Boolean} true-成功;false-失败
 	 */
 	printReqInfo : function(data) {
 		if (!data)
 			return false;
-		var code = data.code, msg = data.msg, succ = this.REQ_CODE.SUCC;
+		var code = data.code, msg = data.msg, succ = this.reqCode.SUCC;
 		if (code === succ && this.SHOW_SUCC_INFO) {
 			iTsai.msg.infoCorrect([ msg, ' [', code, ']' ].join(''));
 		} else {

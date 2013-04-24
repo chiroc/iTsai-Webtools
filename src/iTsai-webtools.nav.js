@@ -1,12 +1,15 @@
 /**
- * @namespace iTsai.nav
+ * 页面导航和浏览器基本信息
+ *
+ * @namespace iTsai
+ * @class nav
  */
 iTsai.nav = {
 	/**
 	 * 显示当前对象名称路径
 	 * 
 	 * @method toString
-	 * @return{String} 'iTsai.nav'
+	 * @return {String} 'iTsai.nav'
 	 */
 	toString : function() {
 		return 'iTsai.nav';
@@ -15,9 +18,9 @@ iTsai.nav = {
 	 * 获取URL地址栏参数值
 	 * 
 	 * @method getParameter
-	 * @param{String} name 参数名
-	 * @param{String} url [optional,default=当前URL]URL地址
-	 * @return{String} 参数值
+	 * @param {String} name 参数名
+	 * @param {String} url [optional,default=当前URL]URL地址
+	 * @return {String} 参数值
 	 */
 	getParameter : function(name, url) {
 		var paramStr = url || window.location.search;
@@ -77,7 +80,7 @@ iTsai.nav = {
 	 * 设置主页
 	 * 
 	 * @method setHomepage
-	 * @param{String} url 设置的URL
+	 * @param {String} url 设置的URL
 	 * @return iTsai.nav
 	 */
 	setHomepage : function(url) {
@@ -110,7 +113,7 @@ iTsai.nav = {
 	 * 获取域名或主机IP
 	 * 
 	 * @method getHost
-	 * @return{String}
+	 * @return {String}
 	 */
 	getHost : function() {
 		return location.host.split(':')[0];
@@ -151,7 +154,7 @@ iTsai.nav = {
 	 * 获取浏览器Agent信息,并返回包含name/version/versioins键的对象
 	 * 
 	 * @method agent
-	 * @returns{Object} {name : '浏览器名称', version : '浏览器主版本号', versions :
+	 * @return {Object} {name : '浏览器名称', version : '浏览器主版本号', versions :
 	 *                  '浏览器详细版本号' }
 	 */
 	agent : function() {

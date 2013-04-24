@@ -1,13 +1,15 @@
 
 /**
- * @namespace iTsai.msg
+ * 页面提示信息
+ * @namespace iTsai
+ * @class msg
  */
 iTsai.msg = {
 	/**
 	 * 显示当前对象名称路径。
 	 * 
 	 * @method toString
-	 * @return{String} 'iTsai.msg'
+	 * @return {String} 'iTsai.msg'
 	 */
 	toString : function() {
 		return 'iTsai.msg';
@@ -16,8 +18,8 @@ iTsai.msg = {
 	 * 普通信息提示。
 	 * 
 	 * @method infoAlert
-	 * @param{String} info 信息
-	 * @param{Number} seconds [optional,default=5]
+	 * @param {String} info 信息
+	 * @param {Number} seconds [optional,default=5]
 	 *                等待关闭秒数。小于0表示一直显示，直到被下一条覆盖或搬运清除。
 	 */
 	infoAlert : function(info, seconds) {
@@ -27,8 +29,8 @@ iTsai.msg = {
 	 * 正确信息提示。
 	 * 
 	 * @method infoCorrect
-	 * @param{String} info 信息
-	 * @param{Number} seconds [optional,default=5]
+	 * @param {String} info 信息
+	 * @param {Number} seconds [optional,default=5]
 	 *                等待关闭秒数。小于0表示一直显示，直到被下一条覆盖或搬运清除。
 	 */
 	infoCorrect : function(info, seconds) {
@@ -38,8 +40,8 @@ iTsai.msg = {
 	 * 警告信息提示。
 	 * 
 	 * @method infoWarning
-	 * @param{String} info 信息
-	 * @param{Number} seconds [optional,default=5]
+	 * @param {String} info 信息
+	 * @param {Number} seconds [optional,default=5]
 	 *                等待关闭秒数。小于0表示一直显示，直到被下一条覆盖或搬运清除。
 	 */
 	infoWarning : function(info, seconds) {
@@ -49,8 +51,8 @@ iTsai.msg = {
 	 * 错误信息提示。
 	 * 
 	 * @method infoError
-	 * @param{String} info 信息
-	 * @param{Number} seconds [optional,default=5]
+	 * @param {String} info 信息
+	 * @param {Number} seconds [optional,default=5]
 	 *                等待关闭秒数。小于0表示一直显示，直到被下一条覆盖或搬运清除。
 	 */
 	infoError : function(info, seconds) {
@@ -68,9 +70,9 @@ iTsai.msg = {
 	 * 通用提示信息样式为.c_correct。
 	 * 
 	 * @method _infoImpl
-	 * @param{String} info 提示信息
-	 * @param{String} cls 样式
-	 * @param{Number} seconds [optional,default=5]
+	 * @param {String} info 提示信息
+	 * @param {String} cls 样式
+	 * @param {Number} seconds [optional,default=5]
 	 *                等待关闭秒数。小于0表示一直显示，直到被下一条覆盖或搬运清除
 	 */
 	_infoImpl : function(info, cls, seconds) {

@@ -1,24 +1,26 @@
 
 /**
  * 日期时间处理工具
- * 
- * @namespace iTsai.calendar
+ *
+ * @namespace iTsai
+ * @class calendar
  */
 iTsai.calendar = {
 	/**
 	 * 显示当前对象名称路径
 	 * 
 	 * @method toString
-	 * @return{String} 'iTsai.calendar'
+	 * @return {String} 'iTsai.calendar'
 	 */
 	toString : function() {
 		return 'iTsai.calendar';
 	},
 	/**
 	 * 将小于10数字前加0
-	 * 
-	 * @param{Number} time 时间
-	 * @return{String}
+	 *
+     * @method _zeroCompletion
+	 * @param {Number} time 时间
+	 * @return {String}
 	 */
 	_zeroCompletion : function(time) {
 		if (time < 10) {
@@ -30,8 +32,8 @@ iTsai.calendar = {
 	 * 将秒转换为时间hh:mm:ss格式
 	 * 
 	 * @method secs2Time
-	 * @param{Number} secs 秒
-	 * @return{String} 格式化时间字符串'00:00:00'
+	 * @param {Number} secs 秒
+	 * @return {String} 格式化时间字符串'00:00:00'
 	 */
 	secs2Time : function(secs) {
 		if (secs < 0) {
@@ -47,9 +49,9 @@ iTsai.calendar = {
 	 * 格式化日期时间字符串
 	 * 
 	 * @method dateTime2str
-	 * @param{Date} dt 日期对象
-	 * @param{String} fmt 格式化字符串，如：'yyyy-MM-dd hh:mm:ss'
-	 * @return{String} 格式化后的日期时间字符串
+	 * @param {Date} dt 日期对象
+	 * @param {String} fmt 格式化字符串，如：'yyyy-MM-dd hh:mm:ss'
+	 * @return {String} 格式化后的日期时间字符串
 	 */
 	dateTime2str : function(dt, fmt) {
 		var z = {
@@ -71,8 +73,8 @@ iTsai.calendar = {
 	 * 根据日期时间格式获取获取当前日期时间
 	 * 
 	 * @method dateTimeWrapper
-	 * @prarm{String} 日期时间格式，如："yyyy-MM-dd hh:mm:ss";
-	 * @return{String} 格式化后的日期时间字符串
+	 * @param {String} 日期时间格式，如："yyyy-MM-dd hh:mm:ss";
+	 * @return {String} 格式化后的日期时间字符串
 	 */
 	dateTimeWrapper : function(fmt) {
 		if (arguments[0])
@@ -83,8 +85,8 @@ iTsai.calendar = {
 	 * 获取当前日期时间
 	 * 
 	 * @method getDatetime
-	 * @param{String} fmt [optional,default='yyyy-MM-dd hh:mm:ss'] 日期时间格式。
-	 * @return{String} 格式化后的日期时间字符串
+	 * @param {String} fmt [optional,default='yyyy-MM-dd hh:mm:ss'] 日期时间格式。
+	 * @return {String} 格式化后的日期时间字符串
 	 */
 	getDatetime : function(fmt) {
 		return this.dateTimeWrapper(fmt || 'yyyy-MM-dd hh:mm:ss');
@@ -93,8 +95,8 @@ iTsai.calendar = {
 	 * 获取当前日期时间+毫秒
 	 * 
 	 * @method getDatetimes
-	 * @param{String} fmt [optional,default='yyyy-MM-dd hh:mm:ss'] 日期时间格式。
-	 * @return{String} 格式化后的日期时间字符串
+	 * @param {String} fmt [optional,default='yyyy-MM-dd hh:mm:ss'] 日期时间格式。
+	 * @return {String} 格式化后的日期时间字符串
 	 */
 	getDatetimes : function(fmt) {
 		var dt = new Date();
@@ -105,8 +107,8 @@ iTsai.calendar = {
 	 * 获取当前日期（年-月-日）
 	 * 
 	 * @method getDate
-	 * @param{String} fmt [optional,default='yyyy-MM-dd'] 日期格式。
-	 * @return{String} 格式化后的日期字符串
+	 * @param {String} fmt [optional,default='yyyy-MM-dd'] 日期格式。
+	 * @return {String} 格式化后的日期字符串
 	 */
 	getDate : function(fmt) {
 		return this.dateTimeWrapper(fmt || 'yyyy-MM-dd');
@@ -115,8 +117,8 @@ iTsai.calendar = {
 	 * 获取当前时间（时:分:秒）
 	 * 
 	 * @method getTime
-	 * @param{String} fmt [optional,default='hh:mm:ss'] 日期格式。
-	 * @return{String} 格式化后的时间字符串
+	 * @param {String} fmt [optional,default='hh:mm:ss'] 日期格式。
+	 * @return {String} 格式化后的时间字符串
 	 */
 	getTime : function(fmt) {
 		return this.dateTimeWrapper(fmt || 'hh:mm:ss');
@@ -125,8 +127,8 @@ iTsai.calendar = {
 	 * 初始化日期段选择器，依赖于jQueryUI的日期控件
 	 * 
 	 * @method initDatePickerRange
-	 * @param{String} datefrom 开始日期id
-	 * @param{String} dateto 结束日期id
+	 * @param {String} datefrom 开始日期id
+	 * @param {String} dateto 结束日期id
 	 */
 	initDatePickerRange : function(datefrom, dateto) {
 		var picker = $('#' + datefrom + ',' + '#' + dateto), dates = {};

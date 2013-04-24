@@ -1,13 +1,15 @@
 /**
  * 常用正则表达式
- * @namespace iTsai.regexp
+ *
+ * @namespace iTsai
+ * @class regexp
  */
 iTsai.regexp = {
 	/**
 	 * 显示当前对象名称路径
 	 * 
 	 * @method toString
-	 * @return{String} iTsai.regexp
+	 * @return {String} iTsai.regexp
 	 */
 	toString : function() {
 		return 'iTsai.regexp';
@@ -21,15 +23,9 @@ iTsai.regexp = {
 	mac : /^[A-F\d]{2}-[A-F\d]{2}-[A-F\d]{2}-[A-F\d]{2}-[A-F\d]{2}-[A-F\d]{2}$/,
 	rang0t65535 : /^(\d{1,4}|[1-5]\d{4}|6([0-4]\d{3}|5([0-4]\d{2}|5([0-2]\d|3[0-5]))))$/,
 	phone : /(^[0-9]{1,4}\-[0-9]{3,4}\-[0-9]{3,8}$)|(^[0-9]{3,4}\-[0-9]{3,8}$)|(^[0-9]{3,8}$)/,// 9999-9999-99999999可包含国际码
-	/**
-	 * 中文字符
-	 */
-	char_zhcn : /[u4e00-u9fa5]/,
+	char_zhcn : /[u4e00-u9fa5]/,//中文字符
 	byte : /[^x00-xff]/,
-	/**
-	 * ASCII字符
-	 */
-	ascii : /[^\x00-xff]/,
+	ascii : /[^\x00-xff]/,//ASCII字符
 	blank : /\s/,
 	notBlank : /\S/
 };

@@ -1,15 +1,16 @@
 
 /**
  * 遮盖层工具，包括页面遮盖和元素遮盖等。
- * 
- * @namespace iTsai.layer
+ *
+ * @namespace iTsai
+ * @class layer
  */
 iTsai.layer = {
 	/**
 	 * 显示当前对象名称路径。
 	 * 
 	 * @method toString
-	 * @return{String} 'iTsai.layer'
+	 * @return {String} 'iTsai.layer'
 	 */
 	toString : function() {
 		return 'iTsai.layer';
@@ -18,8 +19,8 @@ iTsai.layer = {
 	 * 创建遮盖层(如果已经存在遮蔽层就先清除)。
 	 * 
 	 * @method add
-	 * @param{String} content 显示信息
-	 * @return{Object} iTsai.layer
+	 * @param {String} content 显示信息
+	 * @return {Object} iTsai.layer
 	 */
 	add : function(content) {
 		if ($('#itsai-layer').length > 0) {
@@ -55,7 +56,7 @@ iTsai.layer = {
 	 * 清除遮盖层。
 	 * 
 	 * @method clear
-	 * @return{Object} iTsai.layer
+	 * @return {Object} iTsai.layer
 	 */
 	clear : function() {
 		$('#itsai-layer').remove();
@@ -65,9 +66,9 @@ iTsai.layer = {
 	 * 添加遮盖层信息。
 	 * 
 	 * @method addInfo
-	 * @param{String} info 显示信息
-	 * @param{Boolean} isAppend 追加或重写信息。true-追加信息到之前内容;false-替换已有信息
-	 * @return{Object} iTsai.layer
+	 * @param {String} info 显示信息
+	 * @param {Boolean} isAppend 追加或重写信息。true-追加信息到之前内容;false-替换已有信息
+	 * @return {Object} iTsai.layer
 	 */
 	addInfo : function(info, isAppend) {
 		if (isAppend) {
@@ -81,9 +82,9 @@ iTsai.layer = {
 	 * 为对象添加遮盖层。
 	 * 
 	 * @method mask
-	 * @param{Object} obj jQuery对象
-	 * @param{String} info 显示信息
-	 * @return{Object} mask jQuery对象
+	 * @param {Object} obj jQuery对象
+	 * @param {String} info 显示信息
+	 * @return {Object} mask jQuery对象
 	 */
 	mask : function(obj, info) {
 		if ($.isPlainObject(obj)) {
@@ -111,8 +112,8 @@ iTsai.layer = {
 	 * 清除对象mask。
 	 * 
 	 * @method clearMask
-	 * @param{Object} obj jQuery对象 被屏蔽的对象,如果没有就清除所有对象mask
-	 * @return{Object} iTsai.layer
+	 * @param {Object} obj jQuery对象 被屏蔽的对象,如果没有就清除所有对象mask
+	 * @return {Object} iTsai.layer
 	 */
 	clearMask : function(obj) {
 		if ($.isPlainObject(obj)) {
@@ -124,31 +125,30 @@ iTsai.layer = {
 	},
 	/**
 	 * 将元素移动到文档中间。
-	 * 
-	 * @param{Object} obj jQuery对象
-	 * @param{Boolean} adaptive 自动适应文档可视区大小同时改变对象位置
-	 * @param{Number} zIndex 层叠顺序
-	 * @returns{Object} obj jQuery对象
+	 *
+     * @method move2Center
+	 * @param {Object} obj jQuery对象
+	 * @param {Boolean} adaptive 自动适应文档可视区大小同时改变对象位置
+	 * @param {Number} zIndex 层叠顺序
+	 * @return {Object} obj jQuery对象
 	 */
 	move2Center : function(obj, adaptive, zIndex) {
-		if ($.isPlainObject(obj)) {
-			var doc = $(document), _resetPos = function() {
-				obj.css({
-					'z-index' : zIndex ? zIndex : 0,
-					position : 'absolute',
-					left : (doc.width() - obj.width()) / 2,
-					top : doc.scrollTop()
-							+ (($.browser.msie ? doc.height()
-									: window.innerHeight) - obj.height()) / 2
-				});
-			};
-			_resetPos();
-			if (adaptive) {
-				$(window).bind('resize scroll', function() {
-					_resetPos();
-				});
-			}
-		}
+        var doc = $(document), _resetPos = function() {
+            obj.css({
+                'z-index' : zIndex ? zIndex : 0,
+                position : 'absolute',
+                left : (doc.width() - obj.width()) / 2,
+                top : doc.scrollTop()
+                        + (($.browser.msie ? doc.height()
+                                : window.innerHeight) - obj.height()) / 2
+            });
+        };
+        _resetPos();
+        if (adaptive) {
+            $(window).bind('resize scroll', function() {
+                _resetPos();
+            });
+        }
 		return obj;
 	}
 };
