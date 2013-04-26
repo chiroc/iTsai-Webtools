@@ -1,11 +1,19 @@
 /**
- * iTsai WebTools(Web开发工具集)
+ *  iTsai WebTools(Web开发工具集)
  *  当前库依赖第三方库：
  *  1).jQuery（v1.7.x）。详细了解：http://jquery.com/
  *  2).json2.js库。如果浏览器支持JSON.stringify和JSON.parse接口就不需要此库，详细了解：http://www.json.org/
  *  当前库实现的基本功能：
- *  1).ajax: 异步数据请求封装；
- *  2).array:
+ *  0). iTsai: 基础库；
+ *  1).iTsai.ajax: 异步数据请求封装；
+ *  2).iTsai.array: 数组的基本操作；
+ *  3).iTsai.calendar: 日期时间操作；
+ *  4).iTsai.form: 表单操作；
+ *  5).iTsai.layer: 页面遮罩层；
+ *  6).iTsai.msg: 提示信息；
+ *  7).iTsai.nav: 页面导航工具；
+ *  8).iTsai.regexp: 常用正则表达式；
+ *  9).iTsai.string: 字符串操作。
  * @author Chihpeng Tsai(470597142@qq.com)
  * git: https://github.com/iiTsai
  * osc: http://my.oschina.net/tsai
