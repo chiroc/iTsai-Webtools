@@ -1,4 +1,4 @@
-/*@alert info style*/
+﻿/*@alert info style*/
 .c_correct,.c_warning,.c_error,.c_correct_f,.c_warning_f,.c_error_f,.c_alert_f
 	{
 	min-height: 24px !important;
@@ -97,6 +97,7 @@
 	clear: borth;
 	overflow: hidden;
 	position: absolute;
+	z-index: 4294967289;
 }
 
 #itsai-layer span {
