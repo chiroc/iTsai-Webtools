@@ -198,9 +198,6 @@ iTsai.ajax = {
 				if (!data) {
 					return;
 				}
-				if (typeof data !== 'object') {
-					return;
-				}
 				data = $.parseJSON(data);
 				var isSuc = thiz.printReqInfo(data);
 				if (callback && data) {
@@ -232,7 +229,7 @@ iTsai.ajax = {
 		var code = data.code, msg = data.msg, succ = this.reqCode.SUCC;
 		if (code === succ && this.SHOW_SUCC_INFO) {
 			iTsai.msg.infoCorrect([ msg, ' [', code, ']' ].join(''));
-		} else {
+		} else if(code !== succ){
 			iTsai.msg.infoAlert([ msg, ' [', code, ']' ].join(''));
 		}
 		return code === succ ? true : false;
