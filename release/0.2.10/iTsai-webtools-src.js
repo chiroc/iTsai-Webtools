@@ -1,4 +1,4 @@
-/**
+﻿/**
  *  iTsai WebTools(Web开发工具集)
  *  当前库依赖第三方库：
  *  1).jQuery（v1.7.x）。详细了解：http://jquery.com/
@@ -35,7 +35,7 @@ iTsai = {
      * @type {String}
      * @property version
      */
-    version : '0.2.9',
+    version : '0.2.10',
     /**
      * 显示当前对象名称路径
      *
