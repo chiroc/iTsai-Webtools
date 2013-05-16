@@ -756,13 +756,16 @@ iTsai.form = {
     },
     /**
      * 绑定键盘事件到元素，当焦点在元素上并触发键盘事件时响应该函数。
-     *
+     * 
      * @method _bindKey
-     * @param {Object} element 被绑定元素的jQuery对象
-     * @param {Number} iTsai.form.keycode 键盘码
-     * @param {Function} callback 回调函数，参数为绑定的元素对象element和事件e
+     * @param {Number}
+     *            iTsai.form.keycode 键盘码
+     * @param {Object}
+     *            element 被绑定元素的jQuery对象
+     * @param {Function}
+     *            callback 回调函数，参数为绑定的元素对象element和事件e
      */
-    _bindKey : function(element, keycode, callback) {
+    _bindKey : function(keycode,element,  callback) {
         element.keydown(function(e) {
             if (e.keyCode == keycode) {
                 if (typeof callback == 'function')
@@ -1642,7 +1645,7 @@ iTsai.nav = {
      *
      * @method agent
      * @return {Object} {name : '浏览器名称', version : '浏览器主版本号', versions :
-	 *                  '浏览器详细版本号' }
+     *                  '浏览器详细版本号' }
      */
     agent : function() {
         var browser = {}, userAgent = navigator.userAgent.toLowerCase(), s;
