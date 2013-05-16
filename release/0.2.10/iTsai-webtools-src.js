@@ -406,10 +406,10 @@ iTsai.ajax = {
                 if (!data) {
                     return;
                 }
+                data = $.parseJSON(data);
                 if (typeof data !== 'object') {
                     return;
                 }
-                data = $.parseJSON(data);
                 var isSuc = thiz.printReqInfo(data);
                 if (callback && data) {
                     callback(data.data || {}, isSuc);
