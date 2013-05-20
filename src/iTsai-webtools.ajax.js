@@ -227,9 +227,11 @@ iTsai.ajax = {
 		if (!data)
 			return false;
 		var code = data.code, msg = data.msg, succ = this.reqCode.SUCC;
-		if (code === succ && this.SHOW_SUCC_INFO) {
-			iTsai.msg.infoCorrect([ msg, ' [', code, ']' ].join(''));
-		} else if(code !== succ){
+		if (code === succ) {
+			if (this.SHOW_SUCC_INFO) {
+				iTsai.msg.infoCorrect([ msg, ' [', code, ']' ].join(''));
+			}
+		} else {
 			iTsai.msg.infoAlert([ msg, ' [', code, ']' ].join(''));
 		}
 		return code === succ ? true : false;
