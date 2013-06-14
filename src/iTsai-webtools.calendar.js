@@ -124,6 +124,16 @@ iTsai.calendar = {
 		return this.dateTimeWrapper(fmt || 'hh:mm:ss');
 	},
 	/**
+	 * 获取当前时间（时:分:秒）
+	 * 
+	 * @method dateTime2Number
+	 * @param {dateTime} dateTime 'yyyy-MM-dd hh:mm:ss'日期格式。
+	 * @return {Number} 日期的长整形表示形式
+	 */
+	dateTime2Number : function(dateTime){ 
+		return new Date(dateTime.replace(/(\-)/g, "/")).getTime();
+	},
+	/**
 	 * 初始化日期段选择器，依赖于jQueryUI的日期控件
 	 * 
 	 * @method initDatePickerRange
