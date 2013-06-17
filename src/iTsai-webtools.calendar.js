@@ -73,7 +73,7 @@ iTsai.calendar = {
 	 * 根据日期时间格式获取获取当前日期时间
 	 * 
 	 * @method dateTimeWrapper
-	 * @param {String} 日期时间格式，如："yyyy-MM-dd hh:mm:ss";
+	 * @param {String} fmt 日期时间格式，如："yyyy-MM-dd hh:mm:ss";
 	 * @return {String} 格式化后的日期时间字符串
 	 */
 	dateTimeWrapper : function(fmt) {
@@ -123,16 +123,17 @@ iTsai.calendar = {
 	getTime : function(fmt) {
 		return this.dateTimeWrapper(fmt || 'hh:mm:ss');
 	},
-	/**
-	 * 获取当前时间（时:分:秒）
-	 * 
-	 * @method dateTime2Number
-	 * @param {dateTime} dateTime 'yyyy-MM-dd hh:mm:ss'日期格式。
-	 * @return {Number} 日期的长整形表示形式
-	 */
-	dateTime2Number : function(dateTime){ 
-		return new Date(dateTime.replace(/(\-)/g, "/")).getTime();
-	},
+    /**
+     * 将标准日期时间格式转换为长整形格式
+     * @param {String} datetime 为空或 yyyy-MM-dd hh:mm:ss 格式时间
+     * @returns {number}
+     */
+    dateTime2Long : function(datetime){
+        if(datetime && typeof datetime === "string"){
+            return new Date(datetime.replace(/\-/g,'/')).getTime();
+        }
+        return new Date().getTime();
+    },
 	/**
 	 * 初始化日期段选择器，依赖于jQueryUI的日期控件
 	 * 

@@ -18,7 +18,7 @@ iTsai.ajax = {
 	 * 初始化全局Request对象请求参数，包括：请求URL，超时，成功返回码。
 	 * 
 	 * @method setup
-	 * @param {Object} s 配置对象，数据格式：{ url:'/', timeout:10000, sucCode : 200 }
+	 * @param {Object} s 配置对象，数据格式：{ url:'/', timeout:10000, sucCode : 200, sucInfo : true }
 	 * @return {Object} iTsai.ajax
 	 */
 	setup : function(s) {
@@ -94,7 +94,7 @@ iTsai.ajax = {
 	/**
 	 * 超时,默认超时30000ms
 	 * 
-	 * @type {Number} 15000ms
+	 * @type {Number} 10000ms
 	 * @property TIME_OUT
 	 */
 	TIME_OUT : 10000,
@@ -191,11 +191,14 @@ iTsai.ajax = {
 		$.ajax({
 			data : cmd,
 			type : type,
-			async : sync ? false : true,
+			async : !sync,
 			url : thiz.REQ_URL,
 			timeout : thiz.TIME_OUT,
 			success : function(data, textStatus) {
 				if (!data) {
+					return;
+				}
+				if (typeof data !== 'object') {
 					return;
 				}
 				data = $.parseJSON(data);
@@ -224,16 +227,16 @@ iTsai.ajax = {
 	 * @return {Boolean} true-成功;false-失败
 	 */
 	printReqInfo : function(data) {
-		if (!data)
-			return false;
-		var code = data.code, msg = data.msg, succ = this.reqCode.SUCC;
-		if (code === succ) {
-			if (this.SHOW_SUCC_INFO) {
-				iTsai.msg.infoCorrect([ msg, ' [', code, ']' ].join(''));
-			}
-		} else {
-			iTsai.msg.infoAlert([ msg, ' [', code, ']' ].join(''));
-		}
-		return code === succ ? true : false;
+        if (!data)
+            return false;
+        var code = data.code, msg = data.msg, succ = this.reqCode.SUCC;
+        if (code === succ) {
+            if (this.SHOW_SUCC_INFO) {
+                iTsai.msg.infoCorrect([ msg, ' [', code, ']' ].join(''));
+            }
+        } else {
+            iTsai.msg.infoAlert([ msg, ' [', code, ']' ].join(''));
+        }
+		return !!(code === succ);
 	}
 };
