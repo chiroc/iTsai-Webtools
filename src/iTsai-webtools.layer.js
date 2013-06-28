@@ -62,6 +62,14 @@ iTsai.layer = {
 		return this;
 	},
 	/**
+	 * 清除所有遮盖层
+	 * @return {Object} iTsai.layer
+	 */
+	clearAll : function () {
+		$('.itsai-mask').remove();
+		return this;
+	},
+	/**
 	 * 添加遮盖层信息。
 	 *
 	 * @method addInfo
@@ -101,7 +109,6 @@ iTsai.layer = {
 			left : (o_w - txt.width()) / 2
 		});
 		return mask;
-		return null;
 	},
 	/**
 	 * 清除对象mask。
