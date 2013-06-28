@@ -865,6 +865,7 @@ iTsai.ajax = {
  * @namespace iTsai
  * @class layer
  */
+
 iTsai.layer = {
 	/**
 	 * 显示当前对象名称路径。
@@ -944,26 +945,24 @@ iTsai.layer = {
 	 * @return {Object} mask jQuery对象
 	 */
 	mask : function (obj, info) {
-		if($.isPlainObject(obj)) {
-			$('#' + obj.attr('masker')).remove();
-			var id = 'itsai-mask-' + iTsai.random(), o_h = obj.outerHeight(), o_w = obj
-				.outerWidth(), pos = obj.position(), txt = $([ '<div>',
-				(info ? info : ''), '</div>' ].join('')), mask = $([
-				'<div class="itsai-mask" id="', id, '"></div>' ].join(''));
-			obj.after(mask).attr('masker', id);
-			mask.append(txt).css({
-				position : 'absolute',
-				top : pos.top,
-				left : pos.left,
-				height : o_h,
-				width : o_w
-			});
-			txt.css({
-				top : (o_h - txt.height()) / 2,
-				left : (o_w - txt.width()) / 2
-			});
-			return mask;
-		}
+		$('#' + obj.attr('masker')).remove();
+		var id = 'itsai-mask-' + iTsai.random(), o_h = obj.outerHeight(), o_w = obj
+			.outerWidth(), pos = obj.position(), txt = $([ '<div>',
+			(info ? info : ''), '</div>' ].join('')), mask = $([
+			'<div class="itsai-mask" id="', id, '"></div>' ].join(''));
+		obj.after(mask).attr('masker', id);
+		mask.append(txt).css({
+			position : 'absolute',
+			top : pos.top,
+			left : pos.left,
+			height : o_h,
+			width : o_w
+		});
+		txt.css({
+			top : (o_h - txt.height()) / 2,
+			left : (o_w - txt.width()) / 2
+		});
+		return mask;
 		return null;
 	},
 	/**
@@ -974,7 +973,7 @@ iTsai.layer = {
 	 * @return {Object} iTsai.layer
 	 */
 	clearMask : function (obj) {
-		if($.isPlainObject(obj)) {
+		if(obj) {
 			$('#' + obj.attr('masker')).remove();
 		} else {
 			$('.itsai-mask').remove();
