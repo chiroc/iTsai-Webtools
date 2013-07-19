@@ -201,6 +201,7 @@ iTsai.ajax = {
 					data = $.parseJSON(data);
 				} catch (e) {
 					iTsai.msg.infoError("JSON Format Error:" + e.toString());
+					return;
 				}
 				var isSuc = thiz.printReqInfo(data);
 				if(callback && data) {
@@ -208,14 +209,7 @@ iTsai.ajax = {
 				}
 			},
 			error : function (XMLHttpRequest, textStatus, errorThrown) {
-				if(textStatus == "timeout") {
-					iTsai.msg.infoError("Timeout Exception:" + errorThrown);
-				}
-				throw {
-					XMLHttpRequest : XMLHttpRequest,
-					textStatus : textStatus,
-					errorThrown : errorThrown
-				};
+				iTsai.msg.infoError("[" +textStatus + ']' errorThrown);
 			}
 		});
 	},
