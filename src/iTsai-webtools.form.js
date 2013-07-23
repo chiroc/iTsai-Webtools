@@ -321,7 +321,7 @@ iTsai.form = {
 				.attr('name'), value = null;
 
 			// 判断输入框是否已经序列化过
-			if(input.hasClass('_isSerialized')) {
+			if(input.hasClass('_isSerialized') || (typeof id == 'undefined' && typeof name == 'undefined')) {
 				continue;
 			}
 
