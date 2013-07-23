@@ -1340,9 +1340,9 @@ iTsai.form = {
 				.attr('name'), value = null;
 
 			// 判断输入框是否已经序列化过
-			if(input.hasClass('_isSerialized')) {
-				continue;
-			}
+            if(input.hasClass('_isSerialized') || (typeof id == 'undefined' && typeof name == 'undefined')) {
+                continue;
+            }
 
 			// input输入标签
 			if(tagName == 'INPUT' && type) {
