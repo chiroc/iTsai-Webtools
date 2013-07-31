@@ -209,7 +209,7 @@ iTsai.ajax = {
 				}
 			},
 			error : function (XMLHttpRequest, textStatus, errorThrown) {
-				iTsai.msg.infoError("[" +textStatus + ']' errorThrown);
+				iTsai.msg.infoError("[" +textStatus + ']' + errorThrown);
 			}
 		});
 	},
