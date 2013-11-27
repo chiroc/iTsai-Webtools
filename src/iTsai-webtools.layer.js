@@ -29,7 +29,7 @@ iTsai.layer = {
 		if(!content) {
 			tip = content;
 		}
-		var div = $('<div></div>'), doc = $(document), txt = $([ '<span>', tip,
+		var div = $('<iframe src="" style="position:absolute;left:0px;top:0px;width:100%;height:100%;z-index:0;scrolling:no;" frameborder="0"></iframe><div style="z-index:101;position:relative;border: 1px solid #cccccc;"><div></div></div>'), doc = $(document), txt = $([ '<span>', tip,
 			'</span>' ].join(''));
 		div.attr('id', 'itsai-layer').html(txt);
 
