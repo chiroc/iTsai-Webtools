@@ -2,7 +2,7 @@
 iTsai-Webtools
 ==============
 <ul>
-<li><strong>Author</strong> Chihpeng Tsai(470597142@qq.com)</li>
+<li><strong>Author</strong> Chiroc(Chiroc.cai@qq.com)</li>
 <li><strong>Version</strong> 0.2.8</li>
 </ul>
 <p>
